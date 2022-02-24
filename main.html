@@ -9,7 +9,7 @@
     <script src="js/script.js"></script>
 </head>
 
-<body>
+<body onload="drawConfigs">
     <h1><span>RIME</span><ruby>西<rt>See</rt></ruby><ruby>米<rt>Me</rt></ruby></h1>
     <table>
         <tr>
@@ -81,7 +81,8 @@
                     </fieldset>
                     <fieldset>
                         <legend>其它候選項</legend>
-                        <span>文字</span><input type="text" class="color {pickerPosition:'left'}" name="candidate_text" value="000000" onchange="for(i=2;i<=9;i++) document.getElementById('n'+i).style.color = '#'+this.color;exConvert(this.name,this.color);"><br />
+                        <span>文字</span><input type="text" class="color {pickerPosition:'left'}" name="candidate_text" value="000000" onchange="for(i=2;i<=9;i++) document.getElementById('n'+i).style.color = '#'+this.color;exConvert(this.name,this.color);"><br
+                        />
                         <span>提示</span><input type="text" class="color {pickerPosition:'left'}" name="comment_text" value="DDDDDD" onchange="for(i=1;i<=9;i++) document.getElementById('code'+i).style.color = '#'+this.color;exConvert(this.name,this.color);">
                     </fieldset>
                 </form>
@@ -90,18 +91,18 @@
             <td id="layout_setting">
                 <form>
                     <fieldset>
-                        <legend>layout设置</legend>
-                        <span>horizontal</span><input type="checkbox" id="horizontal" /><br />
-                        <span>preedit</span><input type="checkbox" id="preedit" /><br />
-                        <span>font_face</span><input type="text" id="font_face" value="Microsoft Yahei UI" /><br />
-                        <span>font_point</span><input type="number" id="font_point" value=24 /><br />
-                        <span>border_width</span><input type="number" id="border_width" value=1 /><br />
-                        <span>margin_x</span><input type="number" id="margin_x" value=10 /><br />
-                        <span>margin_y</span><input type="number" id="margin_y" value=10 /><br />
-                        <span>spacing</span><input type="number" id="spacing" value=20 /><br />
-                        <span>candidate_spacing</span><input type="number" id="candidate_spacing" value=20 /><br />
-                        <span>hilite_spacing</span><input type="number" id="hilite_spacing" value=40 /><br />
-                        <span>hilite_padding</span><input type="number" id="hilite_padding" value=10 /><br />
+                        <legend>weasel layout设置</legend>
+                        <span>horizontal</span><input type="checkbox" id="horizontal" onchange="drawConfigs()" /><br />
+                        <span>preedit</span><input type="checkbox" id="preedit" onchange="drawConfigs()" /><br />
+                        <span>font_face</span><input type="text" id="font_face" value="Microsoft Yahei UI" onchange="drawConfigs()" /><br />
+                        <span>font_point</span><input type="number" id="font_point" value=24 onchange="drawConfigs()" /><br />
+                        <span>border_width</span><input type="number" id="border_width" value=1 onchange="drawConfigs()" /><br />
+                        <span>margin_x</span><input type="number" id="margin_x" value=10 onchange="drawConfigs()" /><br />
+                        <span>margin_y</span><input type="number" id="margin_y" value=10 onchange="drawConfigs()" /><br />
+                        <span>spacing</span><input type="number" id="spacing" value=20 onchange="drawConfigs()" /><br />
+                        <span>candidate_spacing</span><input type="number" id="candidate_spacing" value=20 onchange="drawConfigs()" /><br />
+                        <span>hilite_spacing</span><input type="number" id="hilite_spacing" value=40 onchange="drawConfigs()" /><br />
+                        <span>hilite_padding</span><input type="number" id="hilite_padding" value=10 onchange="drawConfigs()" /><br />
                         <span>round_corner</span><input type="number" id="round_corner" value=0 onchange="change_round_corner('n1', this.value);" /><br />
                     </fieldset>
                 </form>
@@ -126,160 +127,14 @@
         </tr>
     </table>
     <p>
-        <canvas id="drawing" width="600" height="800">a drawing of something</canvas>
+        <canvas id="drawing" width="1200" height="800">a drawing of something</canvas>
     </p>
-
-    <div>請用Chrome內核瀏覽器</div>
     <script>
-        drawConfigs();
-
-
-        function drawConfigs() {
-            var text = '小狼毫';
-            var preedit = 'pei se';
-            var orders = ['1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.', '9.'];
-            var txts = ['配色', '陪', '配', '賠', '培', '佩', '裴', '斐', '呸'];
-            var cmtxt = ['pei se', 'pei', 'pei', 'pei', 'pei', 'pei', 'pei', 'pei', 'pei'];
-            var border_width = parseInt(document.getElementById('border_width').value);
-            var margin_x = parseInt(document.getElementById('margin_x').value);
-            var margin_y = parseInt(document.getElementById('margin_y').value);
-            var spacing = parseInt(document.getElementById('spacing').value);
-            var candidate_spacing = parseInt(document.getElementById('candidate_spacing').value);
-            var hilite_spacing = parseInt(document.getElementById('hilite_spacing').value);
-            var hilite_padding = parseInt(document.getElementById('hilite_padding').value);
-            var round_corner = parseInt(document.getElementById('round_corner').value);
-            var font_point = parseInt(document.getElementById('font_point').value);
-            // 获取颜色设定
-            // 背景颜色
-            var backcolor = '#' + document.getElementsByName('back')[0].value;
-            // 边框颜色
-            var bordercolor = '#' + document.getElementsByName('border')[0].value;
-            // 内选区域中已经完成选字部分的文字颜色
-            var text_color = '#' + document.getElementsByName('text')[0].value;
-            // 内选区域中编码的颜色
-            var hilite_text_color = '#' + document.getElementsByName('hilited_text')[0].value;
-            // 内选区域中编码的背景色
-            var hilite_back_color = '#' + document.getElementsByName('hilited_back')[0].value;
-            // 当前高亮的候选文字的颜色 
-            var hilited_candidate_text_color = '#' + document.getElementsByName('hilited_candidate_text')[0].value;
-            // 当前高亮的候选文字的背景色
-            var hilited_candidate_back_color = '#' + document.getElementsByName('hilited_candidate_back')[0].value;
-            // 其他候选文字颜色
-            var candidate_text_color = '#' + document.getElementsByName('candidate_text')[0].value;
-            // 其他候选文字 的备注提示颜色
-            var comment_text_color = '#' + document.getElementsByName('comment_text')[0].value;
-
-            // horizontal checkbox状态
-            var horizontal = document.getElementById('horizontal').checked;
-            var preedited = document.getElementById('preedit').checked;
-
-            a = document.getElementById('font_face').value;
-            var font_face = a;
-            var menu_size = parseInt(document.getElementsByName('number')[0].value);
-            console.log(horizontal, preedit, font_face);
-            // ---------------------------------------------------------
-            // 绘图过程
-            var c = document.getElementById('drawing');
-            var ctx = c.getContext("2d");
-            ctx.clearRect(0, 0, c.width, c.height);
-            ctx.font = font_point + 'px ' + font_face;
-            if (!horizontal) {
-                // 绘制内选区域
-                var x, y, i;
-                x = margin_x;
-                y = margin_y;
-                var height, w;
-                var tc = '#000';
-                // 候选高亮色块宽度
-                var hilited_candidate_back_width = 0;
-                // 候选区最长字符串计算高亮宽度
-                for (i = 0; i < menu_size; i++) {
-                    w = ctx.measureText(orders[i]).width + hilite_spacing + ctx.measureText(txts[i]).width +
-                        hilite_spacing + ctx.measureText(cmtxt[i]).width + 2 * hilite_padding;
-                    hilited_candidate_back_width = Math.max(hilited_candidate_back_width, w);
-                }
-                if (!preedited) {
-                    // 输入区域的高亮宽度
-                    w = ctx.measureText(text).width + hilite_spacing + ctx.measureText(preedit).width + hilite_spacing +
-                        ctx.measureText('>').width + hilite_padding * 2;
-                    hilited_candidate_back_width = Math.max(hilited_candidate_back_width, w);
-                }
-                // 图形框大小高度
-                var h = margin_y + font_point + spacing + menu_size * (font_point + candidate_spacing) - candidate_spacing + margin_y;
-                // 图形框大小宽度
-                w = ctx.measureText(text).width + hilite_spacing + ctx.measureText(preedit).width + hilite_spacing +
-                    ctx.measureText('>').width + margin_x * 2;
-                // 绘制图框
-                ctx.beginPath();
-                ctx.lineWidth = border_width;
-                ctx.strokeStyle = bordercolor;
-                ctx.rect(0, 0, w, h);
-                ctx.stroke();
-
-                //console.log(hilited_candidate_back_width);
-                w = margin_x;
-                height = margin_y;
-                DrawTxt(ctx, w, height, text, ctx.font, text_color);
-                w += ctx.measureText(text).width + hilite_spacing;
-                DrawRect(ctx, w - hilite_padding, height - hilite_padding, ctx.measureText(preedit).width + 2 * hilite_padding,
-                    font_point + 2 * hilite_padding, hilite_back_color);
-                DrawTxt(ctx, w, height, preedit, ctx.font, hilite_text_color);
-                w += ctx.measureText(preedit).width + hilite_spacing;
-                DrawTxt(ctx, w, height + font_point, '^', ctx.font, text_color);
-
-                // 绘制 候选区域
-                // 色块
-                w = margin_x - hilite_padding;
-                height = margin_y + font_point + spacing - hilite_padding;
-                DrawRect(ctx, w, height, hilited_candidate_back_width, font_point + 2 * hilite_padding, hilited_candidate_back_color);
-                //绘制候选文字
-                height = margin_y + font_point + spacing;
-                for (i = 0; i < menu_size; i++) {
-                    if (i > 0) {
-                        height += candidate_spacing;
-                        tc = candidate_text_color;
-                    } else {
-                        tc = hilited_candidate_text_color;
-                    }
-                    w = margin_x;
-                    h = 0;
-                    DrawTxt(ctx, w, height, orders[i], ctx.font, tc);
-                    w += ctx.measureText(orders[i]).width + hilite_spacing;
-                    DrawTxt(ctx, w, height, txts[i], ctx.font, tc);
-                    w += ctx.measureText(txts[i]).width + hilite_spacing;
-                    DrawTxt(ctx, w, height, cmtxt[i], ctx.font, comment_text_color);
-                    h = Math.max(h, font_point);
-                    height += h;
-                }
-
-
-            } else {
-
-            }
+        window.onload = function() {
+            drawConfigs();
         }
-
-        function drawLine(context, startX, startY, endX, endY, color, width) {
-            context.strokeStyle = color;
-            context.lineWidth = width;
-            context.beginPath();
-            context.moveTo(startX, startY);
-            context.lineTo(endX, endY);
-            context.closePath();
-            context.stroke();
-        }
-
-        function DrawRect(ctx, startX, startY, width, height, color) {
-            ctx.fillStyle = color;
-            ctx.fillRect(startX, startY, width, height);
-        };
-
-        function DrawTxt(ctx, startX, startY, txt, font, txtColor) {
-            ctx.fillStyle = txtColor;
-            ctx.textBaseline = 'top';
-            ctx.font = font;
-            ctx.fillText(txt, startX, startY);
-        };
     </script>
+    <div>請用Chrome內核瀏覽器</div>
 </body>
 
 </html>

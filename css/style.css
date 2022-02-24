@@ -60,6 +60,7 @@ td {
 #layout_setting {
     background-color: #FFFFFF;
     font-size: 18px;
+    width: 400px;
 }
 
 #select {
