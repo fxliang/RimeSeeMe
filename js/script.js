@@ -144,6 +144,12 @@ function drawConfigs() {
             // 图形框大小宽度
             tmp = hilited_candidate_back_width - 2 * hilite_padding + 2 * margin_x;
             fillRoundedRect(ctx, 0, 0, tmp, h, 0, backcolor);
+            // 绘制图框
+            ctx.beginPath();
+            ctx.lineWidth = border_width;
+            ctx.strokeStyle = bordercolor;
+            ctx.rect(0, 0, w, h);
+            ctx.stroke();
             w = margin_x;
             height = margin_y;
             w += ctx.measureText(text).width + hilite_spacing;
@@ -190,17 +196,6 @@ function drawConfigs() {
                 h = Math.max(h, font_point);
                 height += h;
             }
-            // 图形框大小高度
-            var h = margin_y + font_point + spacing + menu_size * (font_point + candidate_spacing) - candidate_spacing + margin_y;
-            // 图形框大小宽度
-            w = ctx.measureText(text).width + hilite_spacing + ctx.measureText(preedit).width + hilite_spacing +
-                ctx.measureText('^').width + margin_x * 2;
-            // 绘制图框
-            ctx.beginPath();
-            ctx.lineWidth = border_width;
-            ctx.strokeStyle = bordercolor;
-            ctx.rect(0, 0, w, h);
-            ctx.stroke();
         }
 
     } else { // horizontal状态
@@ -219,6 +214,11 @@ function drawConfigs() {
             tmp = Math.max(hilited_candidate_back_width, w);
             h = 2 * margin_y + 2 * font_point + spacing;
             fillRoundedRect(ctx, 0, 0, tmp, h, 0, backcolor);
+            ctx.beginPath();
+            ctx.lineWidth = border_width;
+            ctx.strokeStyle = bordercolor;
+            ctx.rect(0, 0, tmp, h);
+            ctx.stroke();
             w = margin_x;
             height = margin_y;
             w += ctx.measureText(text).width + hilite_spacing;
@@ -265,13 +265,69 @@ function drawConfigs() {
                 w += ctx.measureText(cmtxt[i]).width;
             }
         } else {
-            h = 2 * margin_y + font_point;
+            var offset_y = 10;
+            w = 0;
+            height = offset_y;
+            ctx.font = 16 + 'px ' + font_face;
+            w = margin_x;
+            DrawTxt(ctx, w, height, text, ctx.font, text_color);
+            w += ctx.measureText(text).width;
+            // 候选框和preedit的开头位置x平齐,y = preedit的y坐标+16+spacing
+            // 切换字体
+            height += (16 + spacing) - margin_y;
+            // 计算候选区的款高
+            h = font_point + margin_y * 2;
+            ctx.font = font_point + 'px ' + font_face;
+            tmp = 2 * margin_x;
+            for (i = 0; i < menu_size; i++) {
+                tmp += ctx.measureText(orders[i]).width + hilite_spacing;
+                tmp += ctx.measureText(txts[i]).width + hilite_spacing;
+                tmp += ctx.measureText(cmtxt[i]).width;
+                if (i != menu_size - 1) tmp += candidate_spacing;
+            }
+            // 候选区背景色
+            fillRoundedRect(ctx, w, height, tmp, h, 0, backcolor);
+            // 候选区边框
+            ctx.beginPath();
+            ctx.lineWidth = border_width;
+            ctx.strokeStyle = bordercolor;
+            ctx.rect(w, height, tmp, h);
+            ctx.stroke();
+
+            w += margin_x;
+            height += margin_y;
+            // 候选高亮宽度计算
+            hilited_candidate_back_width = ctx.measureText(orders[0]).width + 2 * hilite_spacing +
+                ctx.measureText(txts[0]).width + ctx.measureText(cmtxt[0]).width + 2 * hilite_padding;
+            // source-atop, 让候选区高亮不超出候选区背景范围
+            ctx.save();
+            ctx.globalCompositeOperation = 'source-atop';
+            fillRoundedRect(ctx, w - hilite_padding, height - hilite_padding,
+                hilited_candidate_back_width, hilite_padding * 2 + font_point, round_corner, hilited_candidate_back_color);
+            ctx.restore();
+
+            // 先将候选区的高亮背景绘制,再绘制内选区的高亮和preedit,避免候选区的块盖到内选区的问题
+            // height = offset_y, w = margin_x+ctx.measureText(text).width  
+            ctx.font = 16 + 'px ' + font_face;
+            fillRoundedRect(ctx, margin_x + ctx.measureText(text).width, offset_y, ctx.measureText(preedit).width, 16, 0, hilite_back_color);
+            DrawTxt(ctx, margin_x + ctx.measureText(text).width, offset_y, preedit, ctx.font, hilite_text_color);
+            ctx.font = font_point + 'px ' + font_face;
+            // 绘制候选区文字
+            for (i = 0; i < menu_size; i++) {
+                if (i > 0) {
+                    w += candidate_spacing;
+                    tc = candidate_text_color;
+                } else {
+                    tc = hilited_candidate_text_color;
+                }
+                DrawTxt(ctx, w, height, orders[i], ctx.font, tc);
+                w += ctx.measureText(orders[i]).width + hilite_spacing;
+                DrawTxt(ctx, w, height, txts[i], ctx.font, tc);
+                w += ctx.measureText(txts[i]).width + hilite_spacing;
+                DrawTxt(ctx, w, height, cmtxt[i], ctx.font, comment_text_color);
+                w += ctx.measureText(cmtxt[i]).width;
+            }
         }
-        ctx.beginPath();
-        ctx.lineWidth = border_width;
-        ctx.strokeStyle = bordercolor;
-        ctx.rect(0, 0, tmp, h);
-        ctx.stroke();
     }
 }
 
