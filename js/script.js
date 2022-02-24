@@ -117,92 +117,161 @@ function drawConfigs() {
     var tmp;
     ctx.clearRect(0, 0, c.width, c.height);
     ctx.font = font_point + 'px ' + font_face;
+    //ctx.globalCompositeOperation = 'source-atop';
+
+    var x, y, i;
+    x = margin_x;
+    y = margin_y;
+    var height, w;
+    var tc = '#000';
+    // 候选高亮色块宽度
+    var hilited_candidate_back_width = 0;
     if (!horizontal) {
-        // 绘制内选区域
-        var x, y, i;
-        x = margin_x;
-        y = margin_y;
-        var height, w;
-        var tc = '#000';
-        // 候选高亮色块宽度
-        var hilited_candidate_back_width = 0;
-        // 候选区最长字符串计算高亮宽度
-        for (i = 0; i < menu_size; i++) {
-            w = ctx.measureText(orders[i]).width + hilite_spacing + ctx.measureText(txts[i]).width +
-                hilite_spacing + ctx.measureText(cmtxt[i]).width + 2 * hilite_padding;
-            hilited_candidate_back_width = Math.max(hilited_candidate_back_width, w);
-        }
         if (!preedited) {
+            // 绘制内选区域
+            // 候选区最长字符串计算高亮宽度
+            for (i = 0; i < menu_size; i++) {
+                w = ctx.measureText(orders[i]).width + hilite_spacing + ctx.measureText(txts[i]).width +
+                    hilite_spacing + ctx.measureText(cmtxt[i]).width + 2 * hilite_padding;
+                hilited_candidate_back_width = Math.max(hilited_candidate_back_width, w);
+            }
             // 输入区域的高亮宽度
             w = ctx.measureText(text).width + hilite_spacing + ctx.measureText(preedit).width + hilite_spacing +
-                ctx.measureText('>').width + hilite_padding * 2;
+                ctx.measureText('^').width + hilite_padding * 2;
             hilited_candidate_back_width = Math.max(hilited_candidate_back_width, w);
-        }
-
-        // 图形框大小高度
-        var h = margin_y + font_point + spacing + menu_size * (font_point + candidate_spacing) - candidate_spacing + margin_y;
-        // 图形框大小宽度
-        tmp = hilited_candidate_back_width - 2 * hilite_padding + 2 * margin_x;
-        fillRoundedRect(ctx, 0, 0, tmp, h, 0, backcolor);
-        w = margin_x;
-        height = margin_y;
-        w += ctx.measureText(text).width + hilite_spacing;
-        fillRoundedRect(ctx, w - hilite_padding, height - hilite_padding, ctx.measureText(preedit).width + 2 * hilite_padding,
-            font_point + 2 * hilite_padding, round_corner, hilite_back_color);
-        DrawTxt(ctx, w, height, preedit, ctx.font, hilite_text_color);
-        w += ctx.measureText(preedit).width + hilite_spacing;
-        DrawTxt(ctx, w, height + font_point - hilite_padding, '^', ctx.font, text_color);
-        w = margin_x;
-        DrawTxt(ctx, w, height, text, ctx.font, text_color);
-
-        // 绘制 候选区域
-        // 色块
-        w = margin_x - hilite_padding;
-        height = margin_y + font_point + spacing - hilite_padding;
-        if (w >= 0 || margin_x - hilite_padding + hilited_candidate_back_width <= tmp)
-            fillRoundedRect(ctx, w, height, hilited_candidate_back_width,
-                font_point + 2 * hilite_padding, round_corner, hilited_candidate_back_color);
-        else {
-            if (w < 0)
-                w = 0;
-            if (margin_x - hilite_padding + hilited_candidate_back_width > tmp)
-                hilited_candidate_back_width = tmp;
-            fillRoundedRect(ctx, w, height, hilited_candidate_back_width,
-                font_point + 2 * hilite_padding, 0, hilited_candidate_back_color);
-        }
-        //绘制候选文字
-        height = margin_y + font_point + spacing;
-        for (i = 0; i < menu_size; i++) {
-            if (i > 0) {
-                height += candidate_spacing;
-                tc = candidate_text_color;
-            } else {
-                tc = hilited_candidate_text_color;
-            }
+            // 图形框大小高度
+            var h = margin_y + font_point + spacing + menu_size * (font_point + candidate_spacing) - candidate_spacing + margin_y;
+            // 图形框大小宽度
+            tmp = hilited_candidate_back_width - 2 * hilite_padding + 2 * margin_x;
+            fillRoundedRect(ctx, 0, 0, tmp, h, 0, backcolor);
             w = margin_x;
-            h = 0;
-            DrawTxt(ctx, w, height, orders[i], ctx.font, tc);
-            w += ctx.measureText(orders[i]).width + hilite_spacing;
-            DrawTxt(ctx, w, height, txts[i], ctx.font, tc);
-            w += ctx.measureText(txts[i]).width + hilite_spacing;
-            DrawTxt(ctx, w, height, cmtxt[i], ctx.font, comment_text_color);
-            h = Math.max(h, font_point);
-            height += h;
+            height = margin_y;
+            w += ctx.measureText(text).width + hilite_spacing;
 
+            // 高亮部分只在输入框内,javascript 设定globalCompositeOperation = 'atop',前要save,后要restore
+            ctx.save();
+            ctx.globalCompositeOperation = 'source-atop';
+            fillRoundedRect(ctx, w - hilite_padding, height - hilite_padding, ctx.measureText(preedit).width + 2 * hilite_padding,
+                font_point + 2 * hilite_padding, round_corner, hilite_back_color);
+            ctx.restore();
+
+            DrawTxt(ctx, w, height, preedit, ctx.font, hilite_text_color);
+            w += ctx.measureText(preedit).width + hilite_spacing;
+            DrawTxt(ctx, w, height + font_point, '^', ctx.font, text_color);
+            w = margin_x;
+            DrawTxt(ctx, w, height, text, ctx.font, text_color);
+
+            // 绘制 候选区域
+            // 色块
+            w = margin_x - hilite_padding;
+            height = margin_y + font_point + spacing - hilite_padding;
+            // 高亮部分只在输入框内,javascript 设定globalCompositeOperation = 'atop',前要save,后要restore
+            ctx.save();
+            ctx.globalCompositeOperation = 'source-atop';
+            fillRoundedRect(ctx, w, height, hilited_candidate_back_width, font_point + 2 * hilite_padding, round_corner, hilited_candidate_back_color);
+            ctx.restore();
+
+            //绘制候选文字
+            height = margin_y + font_point + spacing;
+            for (i = 0; i < menu_size; i++) {
+                if (i > 0) {
+                    height += candidate_spacing;
+                    tc = candidate_text_color;
+                } else {
+                    tc = hilited_candidate_text_color;
+                }
+                w = margin_x;
+                h = 0;
+                DrawTxt(ctx, w, height, orders[i], ctx.font, tc);
+                w += ctx.measureText(orders[i]).width + hilite_spacing;
+                DrawTxt(ctx, w, height, txts[i], ctx.font, tc);
+                w += ctx.measureText(txts[i]).width + hilite_spacing;
+                DrawTxt(ctx, w, height, cmtxt[i], ctx.font, comment_text_color);
+                h = Math.max(h, font_point);
+                height += h;
+            }
+            // 图形框大小高度
+            var h = margin_y + font_point + spacing + menu_size * (font_point + candidate_spacing) - candidate_spacing + margin_y;
+            // 图形框大小宽度
+            w = ctx.measureText(text).width + hilite_spacing + ctx.measureText(preedit).width + hilite_spacing +
+                ctx.measureText('^').width + margin_x * 2;
+            // 绘制图框
+            ctx.beginPath();
+            ctx.lineWidth = border_width;
+            ctx.strokeStyle = bordercolor;
+            ctx.rect(0, 0, w, h);
+            ctx.stroke();
         }
-        // 图形框大小高度
-        var h = margin_y + font_point + spacing + menu_size * (font_point + candidate_spacing) - candidate_spacing + margin_y;
-        // 图形框大小宽度
-        w = ctx.measureText(text).width + hilite_spacing + ctx.measureText(preedit).width + hilite_spacing +
-            ctx.measureText('^').width + margin_x * 2;
-        // 绘制图框
+
+    } else { // horizontal状态
+        if (!preedited) {
+            hilited_candidate_back_width = ctx.measureText(text).width + hilite_spacing + ctx.measureText(preedit).width + hilite_spacing +
+                ctx.measureText('>').width + hilite_padding * 2;
+            w = 2 * margin_x;
+            for (i = 0; i < menu_size; i++) {
+                w += ctx.measureText(orders[i]).width + hilite_spacing;
+                w += ctx.measureText(txts[i]).width + hilite_spacing;
+                w += ctx.measureText(cmtxt[i]).width;
+                if (i != menu_size + 1) w += candidate_spacing;
+            }
+            w -= candidate_spacing;
+            // 图框宽度=输入栏的宽度和候选栏宽度的较大值
+            tmp = Math.max(hilited_candidate_back_width, w);
+            h = 2 * margin_y + 2 * font_point + spacing;
+            fillRoundedRect(ctx, 0, 0, tmp, h, 0, backcolor);
+            w = margin_x;
+            height = margin_y;
+            w += ctx.measureText(text).width + hilite_spacing;
+
+            // 高亮部分只在输入框内,javascript 设定globalCompositeOperation = 'atop',前要save,后要restore
+            ctx.save();
+            ctx.globalCompositeOperation = 'source-atop';
+            fillRoundedRect(ctx, w - hilite_padding, height - hilite_padding, ctx.measureText(preedit).width + 2 * hilite_padding,
+                font_point + 2 * hilite_padding, round_corner, hilite_back_color);
+            ctx.restore();
+
+            DrawTxt(ctx, w, height, preedit, ctx.font, hilite_text_color);
+            w += ctx.measureText(preedit).width + hilite_spacing;
+            DrawTxt(ctx, w, height + font_point, '^', ctx.font, text_color);
+            w = margin_x;
+            DrawTxt(ctx, w, height, text, ctx.font, text_color);
+            // 绘制高亮候选的底色
+            w = margin_x - hilite_padding;
+            height = margin_y + font_point + spacing - hilite_padding;
+            hilited_candidate_back_width = 2 * hilite_padding + ctx.measureText(orders[0]).width + 2 * hilite_spacing + ctx.measureText(txts[0]).width +
+                ctx.measureText(cmtxt[0]).width;
+
+            // 高亮部分只在输入框内,javascript 设定globalCompositeOperation = 'atop',前要save,后要restore
+            ctx.save();
+            ctx.globalCompositeOperation = 'source-atop';
+            fillRoundedRect(ctx, w, height, hilited_candidate_back_width, hilite_padding * 2 + font_point, round_corner, hilited_candidate_back_color);
+            ctx.restore();
+
+            // 绘制候选区
+            w = margin_x;
+            height = margin_y + font_point + spacing;
+            for (i = 0; i < menu_size; i++) {
+                if (i > 0) {
+                    w += candidate_spacing;
+                    tc = candidate_text_color;
+                } else {
+                    tc = hilited_candidate_text_color;
+                }
+                DrawTxt(ctx, w, height, orders[i], ctx.font, tc);
+                w += ctx.measureText(orders[i]).width + hilite_spacing;
+                DrawTxt(ctx, w, height, txts[i], ctx.font, tc);
+                w += ctx.measureText(txts[i]).width + hilite_spacing;
+                DrawTxt(ctx, w, height, cmtxt[i], ctx.font, comment_text_color);
+                w += ctx.measureText(cmtxt[i]).width;
+            }
+        } else {
+            h = 2 * margin_y + font_point;
+        }
         ctx.beginPath();
         ctx.lineWidth = border_width;
         ctx.strokeStyle = bordercolor;
-        ctx.rect(0, 0, w, h);
+        ctx.rect(0, 0, tmp, h);
         ctx.stroke();
-    } else {
-
     }
 }
 

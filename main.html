@@ -44,7 +44,7 @@
 
                     <fieldset>
                         <legend>其他設置</legend>
-                        <span>候選數</span> <input type="range" value="9" min="1" max="9" name="number" onchange="changeNumber(this.value)"><br />
+                        <span>候選數</span> <input type="range" value="5" min="1" max="9" name="number" onchange="changeNumber(this.value)"><br />
                     </fieldset>
                     <fieldset>
                         <legend>顯示背景</legend>
@@ -103,7 +103,7 @@
                         <span>candidate_spacing</span><input type="number" id="candidate_spacing" value=20 onchange="drawConfigs()" /><br />
                         <span>hilite_spacing</span><input type="number" id="hilite_spacing" value=40 onchange="drawConfigs()" /><br />
                         <span>hilite_padding</span><input type="number" id="hilite_padding" value=10 onchange="drawConfigs()" /><br />
-                        <span>round_corner</span><input type="number" id="round_corner" value=0 onchange="change_round_corner('n1', this.value);" /><br />
+                        <span>round_corner</span><input type="number" id="round_corner" value=0 onchange="drawConfigs()" /><br />
                     </fieldset>
                 </form>
             </td>
@@ -127,7 +127,7 @@
         </tr>
     </table>
     <p>
-        <canvas id="drawing" width="1200" height="800">a drawing of something</canvas>
+        <canvas id="drawing" width="1600" height="800">a drawing of something</canvas>
     </p>
     <script>
         window.onload = function() {

@@ -45,7 +45,7 @@ td {
 
 #code_generate {
     padding: 20px 20px 20px 10px;
-    width: 300px;
+    width: 400px;
 }
 
 #box {
@@ -55,12 +55,6 @@ td {
     font-family: 'Microsoft YaHei';
     width: 160px;
     padding: 10px 0 10px 10px;
-}
-
-#layout_setting {
-    background-color: #FFFFFF;
-    font-size: 18px;
-    width: 400px;
 }
 
 #select {
