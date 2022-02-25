@@ -8,7 +8,6 @@ function exConvert(name, color) {
 
 function writeIn(name, value) {
     document.getElementById(name).innerHTML = value;
-    drawConfigs();
 }
 
 function changeNumber(value) {
@@ -110,6 +109,21 @@ function drawConfigs() {
 
     var font_face = document.getElementById('font_face').value;
     var menu_size = parseInt(document.getElementsByName('number')[0].value);
+    // 更新代码生成区style部分的内容
+    document.getElementById('style_font_face').textContent = '"' + font_face + '"';
+    document.getElementById('style_font_point').textContent = font_point;
+    document.getElementById('style_horizontal').textContent = horizontal.toString();
+    document.getElementById('style_inline_preedit').textContent = preedited.toString();
+    document.getElementById('layout_border_width').textContent = border_width;
+    document.getElementById('layout_margin_x').textContent = margin_x;
+    document.getElementById('layout_margin_y').textContent = margin_y;
+    document.getElementById('layout_spacing').textContent = spacing;
+    document.getElementById('layout_candidate_spacing').textContent = candidate_spacing;
+    document.getElementById('layout_hilite_padding').textContent = hilite_padding;
+    document.getElementById('layout_hilite_spacing').textContent = hilite_spacing;
+    document.getElementById('layout_round_corner').textContent = round_corner;
+    document.getElementById('menu_size').textContent = menu_size;
+    // 更新代码生成区style部分的内容 结束
     // ---------------------------------------------------------
     // 绘图过程
     var c = document.getElementById('drawing');
@@ -117,7 +131,6 @@ function drawConfigs() {
     var tmp;
     ctx.clearRect(0, 0, c.width, c.height);
     ctx.font = font_point + 'px ' + font_face;
-    //ctx.globalCompositeOperation = 'source-atop';
 
     var x, y, i;
     x = margin_x;
