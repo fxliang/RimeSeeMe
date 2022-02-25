@@ -126,56 +126,42 @@ function drawConfigs() {
     var tc = '#000';
     // 候选高亮色块宽度
     var hilited_candidate_back_width = 0;
-    if (!horizontal) {
-        if (!preedited) {
-            // 绘制内选区域
-            // 候选区最长字符串计算高亮宽度
-            for (i = 0; i < menu_size; i++) {
-                w = ctx.measureText(orders[i]).width + hilite_spacing + ctx.measureText(txts[i]).width +
-                    hilite_spacing + ctx.measureText(cmtxt[i]).width + 2 * hilite_padding;
-                hilited_candidate_back_width = Math.max(hilited_candidate_back_width, w);
-            }
-            // 输入区域的高亮宽度
-            w = ctx.measureText(text).width + hilite_spacing + ctx.measureText(preedit).width + hilite_spacing +
-                ctx.measureText('^').width + hilite_padding * 2;
-            hilited_candidate_back_width = Math.max(hilited_candidate_back_width, w);
-            // 图形框大小高度
-            var h = margin_y + font_point + spacing + menu_size * (font_point + candidate_spacing) - candidate_spacing + margin_y;
-            // 图形框大小宽度
-            tmp = hilited_candidate_back_width - 2 * hilite_padding + 2 * margin_x;
-            fillRoundedRect(ctx, 0, 0, tmp, h, 0, backcolor);
-            // 绘制图框
+    if (!horizontal) { // vertical
+        if (!preedited) { // vertical not preedit
+            // 背景
+            w = 0;
+            height = 0;
+            tmp = ctx.measureText(text).width + 2 * hilite_spacing + ctx.measureText(preedit).width + ctx.measureText('^').width + 2 * margin_x;
+            tmp = Math.max(ctx.measureText(orders[0]).width + ctx.measureText(txts[0]).width + ctx.measureText(cmtxt[0]).width + 2 * hilite_spacing + 2 * margin_x, tmp);
+            h = margin_y * 2 + font_point * (menu_size + 1) + spacing + (menu_size - 1) * candidate_spacing;
+            fillRoundedRect(ctx, w, height, tmp, h, 0, backcolor);
+            // 色块
+            // preedit
+            ctx.save();
+            ctx.globalCompositeOperation = 'source-atop';
+            fillRoundedRect(ctx, margin_x + ctx.measureText(text).width + hilite_spacing - hilite_padding,
+                margin_y - hilite_padding, ctx.measureText(preedit).width + 2 * hilite_padding, font_point + 2 * hilite_padding, round_corner, hilite_back_color);
+            ctx.restore();
+            // hilited_candidate_back
+            ctx.save();
+            ctx.globalCompositeOperation = 'source-atop';
+            hilited_candidate_back_width = ctx.measureText(text).width + 2 * hilite_spacing + ctx.measureText(preedit).width + ctx.measureText('^').width + 2 * hilite_padding;
+            hilited_candidate_back_width = Math.max(ctx.measureText(orders[0]).width + ctx.measureText(txts[0]).width + ctx.measureText(cmtxt[0]).width + 2 * hilite_spacing + 2 * hilite_padding, hilited_candidate_back_width);
+            fillRoundedRect(ctx, margin_x - hilite_padding, margin_y + font_point + spacing - hilite_padding,
+                hilited_candidate_back_width, font_point + 2 * hilite_padding, round_corner, hilited_candidate_back_color);
+            ctx.restore();
+
+            // 图框
             ctx.beginPath();
             ctx.lineWidth = border_width;
             ctx.strokeStyle = bordercolor;
-            ctx.rect(0, 0, w, h);
+            ctx.rect(0, 0, tmp, h);
             ctx.stroke();
-            w = margin_x;
-            height = margin_y;
-            w += ctx.measureText(text).width + hilite_spacing;
 
-            // 高亮部分只在输入框内,javascript 设定globalCompositeOperation = 'atop',前要save,后要restore
-            ctx.save();
-            ctx.globalCompositeOperation = 'source-atop';
-            fillRoundedRect(ctx, w - hilite_padding, height - hilite_padding, ctx.measureText(preedit).width + 2 * hilite_padding,
-                font_point + 2 * hilite_padding, round_corner, hilite_back_color);
-            ctx.restore();
-
-            DrawTxt(ctx, w, height, preedit, ctx.font, hilite_text_color);
-            w += ctx.measureText(preedit).width + hilite_spacing;
-            DrawTxt(ctx, w, height + font_point, '^', ctx.font, text_color);
-            w = margin_x;
-            DrawTxt(ctx, w, height, text, ctx.font, text_color);
-
-            // 绘制 候选区域
-            // 色块
-            w = margin_x - hilite_padding;
-            height = margin_y + font_point + spacing - hilite_padding;
-            // 高亮部分只在输入框内,javascript 设定globalCompositeOperation = 'atop',前要save,后要restore
-            ctx.save();
-            ctx.globalCompositeOperation = 'source-atop';
-            fillRoundedRect(ctx, w, height, hilited_candidate_back_width, font_point + 2 * hilite_padding, round_corner, hilited_candidate_back_color);
-            ctx.restore();
+            // 内选区域及文字 
+            DrawTxt(ctx, margin_x, margin_y, text, ctx.font, text_color);
+            DrawTxt(ctx, margin_x + ctx.measureText(text).width + hilite_spacing, margin_y, preedit, ctx.font, hilite_text_color);
+            DrawTxt(ctx, margin_x + ctx.measureText(text).width + hilite_spacing * 2 + ctx.measureText(preedit).width, margin_y, '^', ctx.font, text_color);
 
             //绘制候选文字
             height = margin_y + font_point + spacing;
@@ -196,38 +182,29 @@ function drawConfigs() {
                 h = Math.max(h, font_point);
                 height += h;
             }
-        } else {
+        } else { // vertical preedit
             var offset_y = 10;
             w = 0;
             height = offset_y;
             ctx.font = 16 + 'px ' + font_face;
-            //w = margin_x;
             DrawTxt(ctx, w, height, text, ctx.font, text_color);
             w += ctx.measureText(text).width;
             // 候选框和preedit的开头位置x平齐,y = preedit的y坐标+16+spacing
-            // 切换字体
             height += (16 + spacing) - margin_y;
             // 计算候选区的款高
             h = 2 * margin_y + menu_size * font_point + (menu_size - 1) * candidate_spacing;
+            // 切换字体
             ctx.font = font_point + 'px ' + font_face;
             //候选区宽度
             tmp = 2 * margin_x + ctx.measureText(orders[0]).width + 2 * hilite_spacing +
                 ctx.measureText(txts[0]).width + ctx.measureText(cmtxt[0]).width;
             fillRoundedRect(ctx, w, height, tmp, h, 0, backcolor);
-            // 绘制图框
-            ctx.beginPath();
-            ctx.lineWidth = border_width;
-            ctx.strokeStyle = bordercolor;
-            ctx.rect(w, height, tmp, h);
-            ctx.stroke();
-
-            tmp = 2 * hilite_padding + ctx.measureText(orders[0]).width + 2 * hilite_spacing +
-                ctx.measureText(txts[0]).width + ctx.measureText(cmtxt[0]).width;
-
             ctx.save();
             ctx.globalCompositeOperation = 'source-atop';
             fillRoundedRect(ctx, w + margin_x - hilite_padding, height + margin_y - hilite_padding,
-                tmp, 2 * hilite_padding + font_point, round_corner, hilited_candidate_back_color);
+                2 * hilite_padding + ctx.measureText(orders[0]).width + 2 * hilite_spacing + ctx.measureText(txts[0]).width + ctx.measureText(cmtxt[0]).width,
+                2 * hilite_padding + font_point,
+                round_corner, hilited_candidate_back_color);
             ctx.restore();
 
             // 绘制内选preedit和其背景
@@ -236,6 +213,12 @@ function drawConfigs() {
                 16, 0, hilite_back_color);
             DrawTxt(ctx, ctx.measureText(text).width, offset_y, preedit, ctx.font, hilite_text_color);
             ctx.font = font_point + 'px ' + font_face;
+            // 绘制图框
+            ctx.beginPath();
+            ctx.lineWidth = border_width;
+            ctx.strokeStyle = bordercolor;
+            ctx.rect(w, height, tmp, h);
+            ctx.stroke();
 
             w += margin_x;
             tmp = w;
@@ -261,7 +244,7 @@ function drawConfigs() {
         }
 
     } else { // horizontal状态
-        if (!preedited) {
+        if (!preedited) { // horizontal not preedit
             hilited_candidate_back_width = ctx.measureText(text).width + hilite_spacing + ctx.measureText(preedit).width + hilite_spacing +
                 ctx.measureText('>').width + hilite_padding * 2;
             w = 2 * margin_x;
@@ -276,14 +259,9 @@ function drawConfigs() {
             tmp = Math.max(hilited_candidate_back_width, w);
             h = 2 * margin_y + 2 * font_point + spacing;
             fillRoundedRect(ctx, 0, 0, tmp, h, 0, backcolor);
-            ctx.beginPath();
-            ctx.lineWidth = border_width;
-            ctx.strokeStyle = bordercolor;
-            ctx.rect(0, 0, tmp, h);
-            ctx.stroke();
-            w = margin_x;
+
             height = margin_y;
-            w += ctx.measureText(text).width + hilite_spacing;
+            w = margin_x + ctx.measureText(text).width + hilite_spacing;
 
             // 高亮部分只在输入框内,javascript 设定globalCompositeOperation = 'atop',前要save,后要restore
             ctx.save();
@@ -308,6 +286,12 @@ function drawConfigs() {
             ctx.globalCompositeOperation = 'source-atop';
             fillRoundedRect(ctx, w, height, hilited_candidate_back_width, hilite_padding * 2 + font_point, round_corner, hilited_candidate_back_color);
             ctx.restore();
+            // border
+            ctx.beginPath();
+            ctx.lineWidth = border_width;
+            ctx.strokeStyle = bordercolor;
+            ctx.rect(0, 0, tmp, h);
+            ctx.stroke();
 
             // 绘制候选区
             w = margin_x;
