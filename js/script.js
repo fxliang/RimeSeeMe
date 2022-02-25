@@ -105,7 +105,7 @@ function drawConfigs() {
 
     // horizontal checkbox状态
     var horizontal = document.getElementById('horizontal').checked;
-    var preedited = document.getElementById('preedit').checked;
+    var inline_preedit = document.getElementById('inline_preedit').checked;
 
     var font_face = document.getElementById('font_face').value;
     var menu_size = parseInt(document.getElementsByName('number')[0].value);
@@ -113,7 +113,7 @@ function drawConfigs() {
     document.getElementById('style_font_face').textContent = '"' + font_face + '"';
     document.getElementById('style_font_point').textContent = font_point;
     document.getElementById('style_horizontal').textContent = horizontal.toString();
-    document.getElementById('style_inline_preedit').textContent = preedited.toString();
+    document.getElementById('style_inline_preedit').textContent = inline_preedit.toString();
     document.getElementById('layout_border_width').textContent = border_width;
     document.getElementById('layout_margin_x').textContent = margin_x;
     document.getElementById('layout_margin_y').textContent = margin_y;
@@ -140,7 +140,7 @@ function drawConfigs() {
     // 候选高亮色块宽度
     var hilited_candidate_back_width = 0;
     if (!horizontal) { // vertical
-        if (!preedited) { // vertical not preedit
+        if (!inline_preedit) { // vertical not preedit
             // 背景
             w = 0;
             height = 0;
@@ -257,7 +257,7 @@ function drawConfigs() {
         }
 
     } else { // horizontal状态
-        if (!preedited) { // horizontal not preedit
+        if (!inline_preedit) { // horizontal not preedit
             hilited_candidate_back_width = ctx.measureText(text).width + hilite_spacing + ctx.measureText(preedit).width + hilite_spacing +
                 ctx.measureText('>').width + hilite_padding * 2;
             w = 2 * margin_x;
