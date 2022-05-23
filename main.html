@@ -44,7 +44,7 @@
 
                     <fieldset>
                         <legend>其他設置</legend>
-                        <span>候選數</span> <input type="range" value="5" min="1" max="9" name="number" onchange="changeNumber(this.value)"><br />
+                        <span>候選數</span> <input type="range" value="9" min="1" max="9" name="number" onchange="changeNumber(this.value)"><br />
                     </fieldset>
                     <fieldset>
                         <legend>顯示背景</legend>
@@ -92,18 +92,18 @@
                 <form>
                     <fieldset>
                         <legend>weasel style设置</legend>
-                        <span>font_face</span><input type="text" id="font_face" value="Microsoft Yahei UI" onchange="drawConfigs()" /><br />
-                        <span>font_point</span><input type="number" id="font_point" value=24 onchange="drawConfigs()" /><br />
-                        <span>horizontal</span><input type="checkbox" id="horizontal" checked=true onchange="drawConfigs()" /><br />
-                        <span>inline_preedit</span><input type="checkbox" id="inline_preedit" checked=true onchange="drawConfigs()" /><br />
-                        <span>border_width</span><input type="number" id="border_width" value=1 onchange="drawConfigs()" /><br />
-                        <span>margin_x</span><input type="number" id="margin_x" value=10 onchange="drawConfigs()" /><br />
-                        <span>margin_y</span><input type="number" id="margin_y" value=10 onchange="drawConfigs()" /><br />
-                        <span>spacing</span><input type="number" id="spacing" value=20 onchange="drawConfigs()" /><br />
-                        <span>candidate_spacing</span><input type="number" id="candidate_spacing" value=20 onchange="drawConfigs()" /><br />
-                        <span>hilite_padding</span><input type="number" id="hilite_padding" value=10 onchange="drawConfigs()" /><br />
-                        <span>hilite_spacing</span><input type="number" id="hilite_spacing" value=20 onchange="drawConfigs()" /><br />
-                        <span>round_corner</span><input type="number" id="round_corner" value=0 onchange="drawConfigs()" /><br />
+                        <span title="字体名称">font_face</span><input type="text" id="font_face" value="Microsoft Yahei UI" onchange="drawConfigs()" /><br />
+                        <span title="字体字号">font_point</span><input type="number" id="font_point" value=24 onchange="drawConfigs()" /><br />
+                        <span title="是否水平布局">horizontal</span><input type="checkbox" id="horizontal" checked=true onchange="drawConfigs()" /><br />
+                        <span title="嵌入式编辑">inline_preedit</span><input type="checkbox" id="inline_preedit" checked=true onchange="drawConfigs()" /><br />
+                        <span title="边框大小">border_width</span><input type="number" id="border_width" value=1 onchange="drawConfigs()" /><br />
+                        <span title="候选离边框x轴距离">margin_x</span><input type="number" id="margin_x" value=10 onchange="drawConfigs()" /><br />
+                        <span title="候选离边框y轴距离">margin_y</span><input type="number" id="margin_y" value=10 onchange="drawConfigs()" /><br />
+                        <span title="输入编码离候选距离">spacing</span><input type="number" id="spacing" value=20 onchange="drawConfigs()" /><br />
+                        <span title="候选之间的距离">candidate_spacing</span><input type="number" id="candidate_spacing" value=20 onchange="drawConfigs()" /><br />
+                        <span title="候选字背景色块到字边界的距离">hilite_padding</span><input type="number" id="hilite_padding" value=10 onchange="drawConfigs()" /><br />
+                        <span title="候选序号与候选词/字之间的距离">hilite_spacing</span><input type="number" id="hilite_spacing" value=20 onchange="drawConfigs()" /><br />
+                        <span title="高亮色块圆角半径">round_corner</span><input type="number" id="round_corner" value=0 onchange="drawConfigs()" /><br />
                     </fieldset>
                 </form>
             </td>
@@ -127,14 +127,14 @@
                     <div>style/font_point:&nbsp;<span id="style_font_point">24</span></div>
                     <div>style/horizontal:&nbsp;<span id="style_horizontal">true</span></div>
                     <div>style/inline_preedit:&nbsp;<span id="style_inline_preedit">true</span></div>
-                    <div>style/style/layout/border_width:&nbsp;<span id="layout_border_width">1</span></div>
-                    <div>style/style/layout/margin_x:&nbsp;<span id="layout_margin_x">10</span></div>
-                    <div>style/style/layout/margin_y:&nbsp;<span id="layout_margin_y">10</span></div>
-                    <div>style/style/layout/spacing:&nbsp;<span id="layout_spacing">20</span></div>
-                    <div>style/style/layout/candidate_spacing:&nbsp;<span id="layout_candidate_spacing">20</span></div>
-                    <div>style/style/layout/hilite_padding:&nbsp;<span id="layout_hilite_padding">10</span></div>
-                    <div>style/style/layout/hilite_spacing:&nbsp;<span id="layout_hilite_spacing">20</span></div>
-                    <div>style/style/layout/round_corner:&nbsp;<span id="layout_round_corner">0</span></div>
+                    <div>style/layout/border_width:&nbsp;<span id="layout_border_width">1</span></div>
+                    <div>style/layout/margin_x:&nbsp;<span id="layout_margin_x">10</span></div>
+                    <div>style/layout/margin_y:&nbsp;<span id="layout_margin_y">10</span></div>
+                    <div>style/layout/spacing:&nbsp;<span id="layout_spacing">20</span></div>
+                    <div>style/layout/candidate_spacing:&nbsp;<span id="layout_candidate_spacing">20</span></div>
+                    <div>style/layout/hilite_padding:&nbsp;<span id="layout_hilite_padding">10</span></div>
+                    <div>style/layout/hilite_spacing:&nbsp;<span id="layout_hilite_spacing">20</span></div>
+                    <div>style/layout/round_corner:&nbsp;<span id="layout_round_corner">0</span></div>
                     <div>menu/page_size:&nbsp;<span id="menu_size">5</span></div>
                 </div>
             </td>
