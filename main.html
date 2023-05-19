@@ -7,6 +7,14 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <script src="jscolor/jscolor.js"></script>
     <script src="js/script.js"></script>
+    <style>
+        #canvas {
+            background-color: white;
+            background-image: url("./bg.png");
+            background-size: auto;
+            background-repeat: repeat;
+        }
+    </style>
 </head>
 
 <body onload="drawConfigs">
@@ -17,18 +25,19 @@
                 <div id="box">
                     <div id="select">
                         <span id="text">小狼毫</span>
-                        <span id="hilited">pei se</span> >
+                        <span id="hilited">pei se</span> ‸
                     </div>
                     <div id="display">
-                        <div id="n1"><span id="label">1.</span><span id="word">配色</span><span id="code1">(pei se)</span></div>
-                        <div id="n2"><span id="label">2.</span><span id="word">陪</span><span id="code2">(pei)</span></div>
-                        <div id="n3"><span id="label">3.</span><span id="word">配</span><span id="code3">(pei)</span></div>
-                        <div id="n4"><span id="label">4.</span><span id="word">賠</span><span id="code4">(pei)</span></div>
-                        <div id="n5"><span id="label">5.</span><span id="word">培</span><span id="code5">(pei)</span></div>
-                        <div id="n6"><span id="label">6.</span><span id="word">佩</span><span id="code6">(pei)</span></div>
-                        <div id="n7"><span id="label">7.</span><span id="word">裴</span><span id="code7">(pei)</span></div>
-                        <div id="n8"><span id="label">8.</span><span id="word">斐</span><span id="code8">(pei)</span></div>
-                        <div id="n9"><span id="label">9.</span><span id="word">呸</span><span id="code9">(pei)</span></div>
+                        <div id="n1"><span id="label1">1.</span><span id="word1">配色</span><span id="code1">(pei se)</span></div>
+                        <div id="n2"><span id="label2">2.</span><span id="word2">陪</span><span id="code2">(pei)</span></div>
+                        <div id="n3"><span id="label3">3.</span><span id="word3">配</span><span id="code3">(pei)</span></div>
+                        <div id="n4"><span id="label4">4.</span><span id="word4">賠</span><span id="code4">(pei)</span></div>
+                        <div id="n5"><span id="label5">5.</span><span id="word5">培</span><span id="code5">(pei)</span></div>
+                        <div id="n6"><span id="label6">6.</span><span id="word6">佩</span><span id="code6">(pei)</span></div>
+                        <div id="n7"><span id="label7">7.</span><span id="word7">裴</span><span id="code7">(pei)</span></div>
+                        <div id="n8"><span id="label8">8.</span><span id="word8">斐</span><span id="code8">(pei)</span></div>
+                        <div id="n9"><span id="label9">9.</span><span id="word9">呸</span><span id="code9">(pei)</span></div>
+                        <div id="n10"><span id="label10">0.</span><span id="word10">胚</span><span id="code10">(pei)</span></div>
                     </div>
                 </div>
             </td>
@@ -44,17 +53,17 @@
 
                     <fieldset>
                         <legend>其他設置</legend>
-                        <span>候選數</span> <input type="range" value="9" min="1" max="9" name="number" onchange="changeNumber(this.value)"><br />
+                        <span>候選數</span> <input type="range" value="5" min="1" max="10" name="number" onchange="changeNumber(this.value)"><br />
                     </fieldset>
                     <fieldset>
                         <legend>顯示背景</legend>
-                        <span>背景色</span><input type="text" id="background" class="color" name="body" value="F9F9F9" onchange="document.getElementById('effect').style.backgroundColor = '#'+this.color">
+                        <span>背景色</span><input type="text" id="background" name="body" value="F9F9F9" onchange="document.getElementById('effect').style.backgroundColor = '#'+this.color">
                     </fieldset>
                     <fieldset id="modEx">
                         <legend>BGR
                             <> RGB</legend>
                         <span>BGR</span><input type="text" id="bgr" value="77DDBB" onchange="exMode('bgr','rgb',this.value);"><br />
-                        <span>RGB</span><input class="color  {pickerPosition:'right'}" type="text" id="rgb" value="BBDD77" onchange="exMode('rgb','bgr',this.value);"><br />
+                        <span>RGB</span><input type="text" id="rgb" value="BBDD77" onchange="exMode('rgb','bgr',this.value);"><br />
                     </fieldset>
                 </form>
             </td>
@@ -63,27 +72,30 @@
                 <form>
                     <fieldset>
                         <legend>背景設置</legend>
-                        <span>背景</span><input type="text" class="color {pickerPosition:'left'}" name="back" value="FFFFFF" onchange="changeColor('box','bg',this.name,this.color);"><br />
-                        <span>邊框</span><input type="text" class="color {pickerPosition:'left'}" name="border" value="000000" onchange="changeColor('box','bd',this.name,this.color);">
+                        <span title="back_color">背景</span><input type="text" style="width:auto" data-jscolor="{}" name="back_color" value="FFFFFF" onchange="changeColor('box','bg',this.name,this.value);"><br />
+                        <span title="border_color">邊框</span><input type="text" style="width:auto" data-jscolor="{}" name="border_color" value="000000" onchange="changeColor('box','bd',this.name,this.value);">
                     </fieldset>
 
                     <fieldset>
                         <legend>內選區域</legend>
-                        <span>文字</span><input type="text" class="color {pickerPosition:'left'}" name="text" value="000000" onchange="changeColor('text','c',this.name,this.color);"><br />
-                        <span>編碼</span><input type="text" class="color {pickerPosition:'left'}" name="hilited_text" value="000000" onchange="changeColor('hilited','c',this.name,this.color);"><br />
-                        <span>背景</span><input type="text" class="color {pickerPosition:'left'}" name="hilited_back" value="DDDDDD" onchange="changeColor('hilited','bg',this.name,this.color);">
+                        <span title="text_color">文字</span><input type="text" style="width:auto" data-jscolor="{}" name="text_color" value="000000" onchange="changeColor('text','c',this.name,this.value);"><br />
+                        <span title="hilited_text_color">編碼</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_text_color" value="000000" onchange="changeColor('hilited','c',this.name,this.value);"><br />
+                        <span title="hilited_back_color">背景</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_back_color" value="DDDDDD" onchange="changeColor('hilited','bg',this.name,this.value);">
                     </fieldset>
 
                     <fieldset>
                         <legend>激活候選項</legend>
-                        <span>文字</span><input type="text" class="color {pickerPosition:'left'}" name="hilited_candidate_text" value="FFFFFF" onchange="changeColor('n1','c',this.name,this.color);"><br />
-                        <span>背景</span><input type="text" class="color {pickerPosition:'left'}" name="hilited_candidate_back" value="000000" onchange="changeColor('n1','bg',this.name,this.color);">
+                        <span title="hilited_label_color">序號文字</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_label_color" value="FFFFFF" onchange="changeColor('n1','c','label1',this.value);"><br />
+                        <span title="hilited_candidate_text_color">候選文字</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_text_color" value="FFFFFF" onchange="changeColor('n1','c','word1',this.value);"><br />
+                        <span title="hilited_comment_text_color">提示文字</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_comment_text_color" value="FFFFFF" onchange="changeColor('n1','c','code1',this.value);"><br />
+                        <span title="hilited_candidate_back_color">激活背景</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_back_color" value="000000" onchange="changeColor('n1','bg',this.name,this.value);">
                     </fieldset>
                     <fieldset>
                         <legend>其它候選項</legend>
-                        <span>文字</span><input type="text" class="color {pickerPosition:'left'}" name="candidate_text" value="000000" onchange="for(i=2;i<=9;i++) document.getElementById('n'+i).style.color = '#'+this.color;exConvert(this.name,this.color);"><br
+                        <span title="label_color">序號文字</span><input type="text" style="width:auto" data-jscolor="{}" name="label_color" value="DDDDDD" onchange="changeColor('ni', 'n', 'label', this.value);"><br>
+                        <span title="candidate_text_color">候選文字</span><input type="text" style="width:auto" data-jscolor="{}" name="candidate_text_color" value="000000" onchange="changeColor('ni', 'n', 'word', this.value);"><br
                         />
-                        <span>提示</span><input type="text" class="color {pickerPosition:'left'}" name="comment_text" value="DDDDDD" onchange="for(i=1;i<=9;i++) document.getElementById('code'+i).style.color = '#'+this.color;exConvert(this.name,this.color);">
+                        <span title="comment_text_color">提示文字</span><input type="text" style="width:auto" data-jscolor="{}" name="comment_text_color" value="DDDDDD" onchange="changeColor('ni', 'n', 'code', this.value);">
                     </fieldset>
                 </form>
 
@@ -140,13 +152,21 @@
             </td>
         </tr>
     </table>
-    <p>
-        <canvas id="drawing" width="1600" height="800">a drawing of something</canvas>
-    </p>
+    <div id="canvas">
+        <p>
+            <canvas id="drawing" width="1600" height="800">a drawing of something</canvas>
+        </p>
+    </div>
     <script>
         window.onload = function() {
             drawConfigs();
         }
+        	jscolor.presets.default = {
+		palette: [
+			'#000000', '#7d7d7d', '#870014', '#ec1c23', '#ff7e26', '#fef100', '#22b14b', '#00a1e7', '#3f47cc', '#a349a4',
+			'#ffffff', '#c3c3c3', '#b87957', '#feaec9', '#ffc80d', '#eee3af', '#b5e61d', '#99d9ea', '#7092be', '#c8bfe7',
+		],
+	}
     </script>
     <div>請用Chrome內核瀏覽器</div>
 </body>

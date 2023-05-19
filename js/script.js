@@ -22,6 +22,7 @@ function changeNumber(value) {
 function changeColor(element, mode, name, color) {
     var BG = "bg",
         BD = "bd";
+    color = convertABGR2RGBA(color);
     switch (mode) {
         case BG:
             document.getElementById(element).style.backgroundColor = '#' + color;
@@ -29,10 +30,18 @@ function changeColor(element, mode, name, color) {
         case BD:
             document.getElementById(element).style.borderColor = '#' + color;
             break;
+        case 'c':
+            document.getElementById(name).style.color = '#' + color;
+            break;
+        case 'n':
+            for(i=2;i<=10;i++){
+                document.getElementById(name + i).style.color = '#' + color;
+            }
+            break;
         default:
             document.getElementById(element).style.color = '#' + color;
     }
-    color = exConvert(name, color);
+    //color = exConvert(name, color);
     drawConfigs();
 }
 
@@ -60,13 +69,20 @@ function exMode(origin, direction, color) {
         }
     }
 }
-
+function convertABGR2RGBA(color)
+{
+    if(color.length > 6)
+        color = color.slice(6,8) + color.slice(4,6) + color.slice(2,4) + color.slice(0,2)
+    else
+        color = color.slice(4) + color.slice(2,4) + color.slice(0,2)
+    return color; 
+}
 function drawConfigs() {
     var text = '小狼毫';
     var preedit = 'pei se';
-    var orders = ['1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.', '9.'];
-    var txts = ['配色', '陪', '配', '賠', '培', '佩', '裴', '斐', '呸'];
-    var cmtxt = ['pei se', 'pei', 'pei', 'pei', 'pei', 'pei', 'pei', 'pei', 'pei'];
+    var orders = ['1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.', '9.', '0.'];
+    var txts = ['配色', '陪', '配', '賠', '培', '佩', '裴', '斐', '呸', '胚'];
+    var cmtxt = ['pei se', 'pei', 'pei', 'pei', 'pei', 'pei', 'pei', 'pei', 'pei', 'pei'];
     var border_width = parseInt(document.getElementById('border_width').value);
     var margin_x = parseInt(document.getElementById('margin_x').value);
     var margin_y = parseInt(document.getElementById('margin_y').value);
@@ -85,23 +101,23 @@ function drawConfigs() {
     var round_corner = parseInt(document.getElementById('round_corner').value);
     // 获取颜色设定
     // 背景颜色
-    var backcolor = '#' + document.getElementsByName('back')[0].value;
+    var backcolor = '#' + convertABGR2RGBA( document.getElementsByName('back_color')[0].value);
     // 边框颜色
-    var bordercolor = '#' + document.getElementsByName('border')[0].value;
+    var bordercolor = '#' + document.getElementsByName('border_color')[0].value;
     // 内选区域中已经完成选字部分的文字颜色
-    var text_color = '#' + document.getElementsByName('text')[0].value;
+    var text_color = '#' + document.getElementsByName('text_color')[0].value;
     // 内选区域中编码的颜色
-    var hilite_text_color = '#' + document.getElementsByName('hilited_text')[0].value;
+    var hilite_text_color = '#' + document.getElementsByName('hilited_text_color')[0].value;
     // 内选区域中编码的背景色
-    var hilite_back_color = '#' + document.getElementsByName('hilited_back')[0].value;
+    var hilite_back_color = '#' + document.getElementsByName('hilited_back_color')[0].value;
     // 当前高亮的候选文字的颜色 
-    var hilited_candidate_text_color = '#' + document.getElementsByName('hilited_candidate_text')[0].value;
+    var hilited_candidate_text_color = '#' + document.getElementsByName('hilited_candidate_text_color')[0].value;
     // 当前高亮的候选文字的背景色
-    var hilited_candidate_back_color = '#' + document.getElementsByName('hilited_candidate_back')[0].value;
+    var hilited_candidate_back_color = '#' + document.getElementsByName('hilited_candidate_back_color')[0].value;
     // 其他候选文字颜色
-    var candidate_text_color = '#' + document.getElementsByName('candidate_text')[0].value;
+    var candidate_text_color = '#' + document.getElementsByName('candidate_text_color')[0].value;
     // 其他候选文字 的备注提示颜色
-    var comment_text_color = '#' + document.getElementsByName('comment_text')[0].value;
+    var comment_text_color = '#' + document.getElementsByName('comment_text_color')[0].value;
 
     // horizontal checkbox状态
     var horizontal = document.getElementById('horizontal').checked;
