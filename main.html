@@ -17,7 +17,7 @@
     </style>
 </head>
 
-<body onload="drawConfigs">
+<body >
     <h1><span>RIME</span><ruby>西<rt>See</rt></ruby><ruby>米<rt>Me</rt></ruby></h1>
     <table>
         <tr>
@@ -53,7 +53,7 @@
 
                     <fieldset>
                         <legend>其他設置</legend>
-                        <span>候選數</span> <input type="range" value="5" min="1" max="10" name="number" onchange="changeNumber(this.value)"><br />
+                        <span>候選數</span> <input type="range" id="_page_size" value="5" min="1" max="10" name="number" onchange="changeNumber(this.value)"><span>&nbsp&nbsp&nbsp&nbsp</span><span id="page_size_value"></span><br />
                     </fieldset>
                     <fieldset>
                         <legend>顯示背景</legend>
@@ -72,34 +72,40 @@
                 <form>
                     <fieldset>
                         <legend>背景設置</legend>
-                        <span title="back_color">背景</span><input type="text" style="width:auto" data-jscolor="{}" name="back_color" value="FFFFFF" onchange="changeColor('box','bg',this.name,this.value);"><br />
-                        <span title="border_color">邊框</span><input type="text" style="width:auto" data-jscolor="{}" name="border_color" value="000000" onchange="changeColor('box','bd',this.name,this.value);">
+                        <span title="back_color">窗口背景</span><input type="text" style="width:auto" data-jscolor="{}" name="back_color" value="FFFFFF" onchange="changeColor('box','bg',this.name,this.value, 'back_color');"><br />
+                        <span title="shadow_color">窗口阴影</span><input type="text" style="width:auto" data-jscolor="{}" name="shadow_color" value="00000000" onchange="exConvert('shadow_color', this.value, convertABGR2RGBA(this.value));"><br />
+                        <span title="border_color">窗口邊框</span><input type="text" style="width:auto" data-jscolor="{}" name="border_color" value="000000" onchange="changeColor('box','bd',this.name,this.value, 'border_color');">
                     </fieldset>
 
                     <fieldset>
                         <legend>內選區域</legend>
-                        <span title="text_color">文字</span><input type="text" style="width:auto" data-jscolor="{}" name="text_color" value="000000" onchange="changeColor('text','c',this.name,this.value);"><br />
-                        <span title="hilited_text_color">編碼</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_text_color" value="000000" onchange="changeColor('hilited','c',this.name,this.value);"><br />
-                        <span title="hilited_back_color">背景</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_back_color" value="DDDDDD" onchange="changeColor('hilited','bg',this.name,this.value);">
+                        <span title="text_color">文&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp字</span><input type="text" style="width:auto" data-jscolor="{}" name="text_color" value="000000" onchange="changeColor('text','c',this.name,this.value, 'text_color');"><br />
+                        <span title="hilited_text_color">編&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp碼</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_text_color" value="000000" onchange="changeColor('hilited','c',this.name,this.value, 'hilited_text_color');"><br />
+                        <span title="hilited_back_color">背&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp景</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_back_color" value="DDDDDD" onchange="changeColor('hilited','bg',this.name,this.value, 'hilited_back_color');"><br />
+                        <span title="hilited_shadow_color">阴&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp影</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_shadow_color" value="00000000" onchange="exConvert('hilited_shadow_color', this.value, convertABGR2RGBA(this.value));">
                     </fieldset>
 
                     <fieldset>
                         <legend>激活候選項</legend>
-                        <span title="hilited_label_color">序號文字</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_label_color" value="FFFFFF" onchange="changeColor('n1','c','label1',this.value);"><br />
-                        <span title="hilited_candidate_text_color">候選文字</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_text_color" value="FFFFFF" onchange="changeColor('n1','c','word1',this.value);"><br />
-                        <span title="hilited_comment_text_color">提示文字</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_comment_text_color" value="FFFFFF" onchange="changeColor('n1','c','code1',this.value);"><br />
-                        <span title="hilited_candidate_back_color">激活背景</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_back_color" value="000000" onchange="changeColor('n1','bg',this.name,this.value);">
+                        <span title="hilited_label_color">序號文字</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_label_color" value="FFFFFF" onchange="changeColor('n1','name','label1',this.value, 'hilited_label_color');"><br />
+                        <span title="hilited_candidate_text_color">候選文字</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_text_color" value="FFFFFF" onchange="changeColor('n1','name','word1',this.value, 'hilited_candidate_text_color');"><br />
+                        <span title="hilited_comment_text_color">提示文字</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_comment_text_color" value="FFFFFF" onchange="changeColor('n1','name','code1',this.value, 'hilited_comment_text_color');"><br />
+                        <span title="hilited_candidate_back_color">激活背景</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_back_color" value="000000" onchange="changeColor('n1','bg',this.name,this.value, 'hilited_candidate_back_color');"><br />
+                        <span title="hilited_candidate_shadow_color">激活阴影</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_shadow_color" value="00000000" onchange="exConvert('hilited_candidate_shadow_color', this.value, convertABGR2RGBA(this.value));"><br />
                     </fieldset>
                     <fieldset>
                         <legend>其它候選項</legend>
-                        <span title="label_color">序號文字</span><input type="text" style="width:auto" data-jscolor="{}" name="label_color" value="DDDDDD" onchange="changeColor('ni', 'n', 'label', this.value);"><br>
-                        <span title="candidate_text_color">候選文字</span><input type="text" style="width:auto" data-jscolor="{}" name="candidate_text_color" value="000000" onchange="changeColor('ni', 'n', 'word', this.value);"><br
-                        />
-                        <span title="comment_text_color">提示文字</span><input type="text" style="width:auto" data-jscolor="{}" name="comment_text_color" value="DDDDDD" onchange="changeColor('ni', 'n', 'code', this.value);">
+                        <span title="label_color">序號文字</span><input type="text" style="width:auto" data-jscolor="{}" name="label_color" value="DDDDDD" onchange="changeColor('ni', 'n', 'label', this.value, 'label_color');"><br>
+                        <span title="candidate_text_color">候選文字</span><input type="text" style="width:auto" data-jscolor="{}" name="candidate_text_color" value="000000" onchange="changeColor('ni', 'n', 'word', this.value, 'candidate_text_color');"><br />
+                        <span title="comment_text_color">提示文字</span><input type="text" style="width:auto" data-jscolor="{}" name="comment_text_color" value="DDDDDD" onchange="changeColor('ni', 'n', 'code', this.value, 'comment_text_color');"><br />
+                        <span title="candidate_back_color">候選背景</span><input type="text" style="width:auto" data-jscolor="{}" name="candidate_back_color" value="00000000" onchange="changeColor('ni', 'nb', 'n', this.value, 'candidate_back_color');"><br />
+                        <span title="candidate_shadow_color">候選阴影</span><input type="text" style="width:auto" data-jscolor="{}" name="candidate_shadow_color" value="00000000" onchange="exConvert('candidate_shadow_color', this.value, convertABGR2RGBA(this.value));"><br />
                     </fieldset>
                 </form>
 
             </td>
+            <!--
+
             <td id="layout_setting">
                 <form>
                     <fieldset>
@@ -116,25 +122,36 @@
                         <span title="候选字背景色块到字边界的距离">hilite_padding</span><input type="number" id="hilite_padding" value=10 onchange="drawConfigs()" /><br />
                         <span title="候选序号与候选词/字之间的距离">hilite_spacing</span><input type="number" id="hilite_spacing" value=20 onchange="drawConfigs()" /><br />
                         <span title="高亮色块圆角半径">round_corner</span><input type="number" id="round_corner" value=0 onchange="drawConfigs()" /><br />
+                        <span title="窗口圆角半径">corner_radius</span><input type="number" id="corner_radius" value=0 onchange="drawConfigs()" /><br />
                     </fieldset>
                 </form>
             </td>
+            -->
             <td id="code_generate">
                 <h2>生成代碼</h2>
                 <div id="source_code">
                     <div id="schema">example</div><span>:</span><br />
                     <div>&nbsp;&nbsp;name:&nbsp;<span id="name">名字</span></div>
                     <div>&nbsp;&nbsp;author:&nbsp;<span id="author">作者</span></div>
-                    <div>&nbsp;&nbsp;back_color:&nbsp;0x<span id="back_color">FFFFFF</span></div>
-                    <div>&nbsp;&nbsp;border_color:&nbsp;0x<span id="border_color">000000</span></div>
-                    <div>&nbsp;&nbsp;text_color:&nbsp;0x<span id="text_color">FFFFFF</span></div>
-                    <div>&nbsp;&nbsp;hilited_text_color:&nbsp;0x<span id="hilited_text_color">FFFFFF</span></div>
-                    <div>&nbsp;&nbsp;hilited_back_color:&nbsp;0x<span id="hilited_back_color">DDDDDD</span></div>
-                    <div>&nbsp;&nbsp;hilited_candidate_text_color:&nbsp;0x<span id="hilited_candidate_text_color">000000</span></div>
-                    <div>&nbsp;&nbsp;hilited_candidate_back_color:&nbsp;0x<span id="hilited_candidate_back_color">FFFFFF</span></div>
-                    <div>&nbsp;&nbsp;candidate_text_color:&nbsp;0x<span id="candidate_text_color">FFFFFF</span></div>
-                    <div>&nbsp;&nbsp;comment_text_color:&nbsp;0x<span id="comment_text_color">FFFFFF</span></div>
+                    <div>&nbsp;&nbsp;back_color:&nbsp;<span id="back_color" class="color">0xFFFFFF</span></div>
+                    <div>&nbsp;&nbsp;shadow_color:&nbsp;<span id="shadow_color" class="color">0x00000000</span></div>
+                    <div>&nbsp;&nbsp;border_color:&nbsp;<span id="border_color" class="color">0x000000</span></div>
+                    <div>&nbsp;&nbsp;text_color:&nbsp;<span id="text_color" class="color">0xFFFFFF</span></div>
+                    <div>&nbsp;&nbsp;hilited_text_color:&nbsp;<span id="hilited_text_color" class="color">0xFFFFFF</span></div>
+                    <div>&nbsp;&nbsp;hilited_back_color:&nbsp;<span id="hilited_back_color" class="color">0xDDDDDD</span></div>
+                    <div>&nbsp;&nbsp;hilited_shadow_color:&nbsp;<span id="hilited_shadow_color" class="color">0x00000000</span></div>
+                    <div>&nbsp;&nbsp;hilited_label_color:&nbsp;<span id="hilited_label_color" class="color">0x000000</span></div>
+                    <div>&nbsp;&nbsp;hilited_candidate_text_color:&nbsp;<span id="hilited_candidate_text_color" class="color">0x000000</span></div>
+                    <div>&nbsp;&nbsp;hilited_comment_text_color:&nbsp;<span id="hilited_comment_text_color" class="color">0x000000</span></div>
+                    <div>&nbsp;&nbsp;hilited_candidate_back_color:&nbsp;<span id="hilited_candidate_back_color" class="color">0xFFFFFF</span></div>
+                    <div>&nbsp;&nbsp;hilited_candidate_shadow_color:&nbsp;<span id="hilited_candidate_shadow_color" class="color">0x00000000</span></div>
+                    <div>&nbsp;&nbsp;label_color:&nbsp;<span id="label_color" class="color">0xFFFFFF</span></div>
+                    <div>&nbsp;&nbsp;candidate_text_color:&nbsp;<span id="candidate_text_color" class="color">0xFFFFFF</span></div>
+                    <div>&nbsp;&nbsp;comment_text_color:&nbsp;<span id="comment_text_color" class="color">0xFFFFFF</span></div>
+                    <div>&nbsp;&nbsp;candidate_back_color:&nbsp;<span id="candidate_back_color" class="color">0x00000000</span></div>
+                    <div>&nbsp;&nbsp;candidate_shadow_color:&nbsp;<span id="candidate_shadow_color" class="color">0x00000000</span></div>
                     <div><br /></div>
+                    <!--
                     <div>style/font_face:&nbsp;<span id="style_font_face">"Microsoft Yahei UI"</span></div>
                     <div>style/font_point:&nbsp;<span id="style_font_point">24</span></div>
                     <div>style/horizontal:&nbsp;<span id="style_horizontal">true</span></div>
@@ -148,25 +165,30 @@
                     <div>style/layout/hilite_spacing:&nbsp;<span id="layout_hilite_spacing">20</span></div>
                     <div>style/layout/round_corner:&nbsp;<span id="layout_round_corner">0</span></div>
                     <div>menu/page_size:&nbsp;<span id="menu_size">5</span></div>
+
+                    -->
                 </div>
             </td>
         </tr>
     </table>
+    <!--
     <div id="canvas">
         <p>
             <canvas id="drawing" width="1600" height="800">a drawing of something</canvas>
         </p>
     </div>
+    -->
     <script>
+        //window.onload = function() { drawConfigs(); }
         window.onload = function() {
-            drawConfigs();
+            changeNumber(document.getElementById('_page_size').value);
         }
-        	jscolor.presets.default = {
-		palette: [
-			'#000000', '#7d7d7d', '#870014', '#ec1c23', '#ff7e26', '#fef100', '#22b14b', '#00a1e7', '#3f47cc', '#a349a4',
-			'#ffffff', '#c3c3c3', '#b87957', '#feaec9', '#ffc80d', '#eee3af', '#b5e61d', '#99d9ea', '#7092be', '#c8bfe7',
-		],
-	}
+        jscolor.presets.default = {
+            palette: [
+                '#000000', '#7d7d7d', '#870014', '#ec1c23', '#ff7e26', '#fef100', '#22b14b', '#00a1e7', '#3f47cc', '#a349a4',
+                '#ffffff', '#c3c3c3', '#b87957', '#feaec9', '#ffc80d', '#eee3af', '#b5e61d', '#99d9ea', '#7092be', '#c8bfe7',
+            ],
+        }
     </script>
     <div>請用Chrome內核瀏覽器</div>
 </body>

@@ -10,7 +10,7 @@ table {
 }
 
 body {
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
     background-color: #f9f9f9;
 }
@@ -55,14 +55,9 @@ td {
     font-size: 18px;
     font-family: 'Microsoft YaHei';
     width: 160px;
-	/*
-    padding: 10px 0 10px 10px;
-	*/
+    padding: 10px 10px 10px 10px;
 }
 
-#select {
-    margin-bottom: 10px;
-}
 
 #select #text {
     color: black;

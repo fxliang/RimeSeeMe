@@ -1,9 +1,35 @@
-function exConvert(name, color) {
-    a = color.toString();
-    a = a[4] + a[5] + a[2] + a[3] + a[0] + a[1];
-    color = a.toUpperCase();
-    document.getElementById(name + '_color').innerHTML = color;
-    drawConfigs();
+function exConvert(name, color, csscolor) {
+    var elm = document.getElementById(name);
+    elm.innerHTML = '0x' + color;
+    //elm.style.backgroundColor = '#' + csscolor;
+    //elm.style.color = oppositeColor(csscolor, -1);
+    //var hsv = RGBtoHSV(parseColorCode(csscolor));
+    //elm.style.color = InvertColor(csscolor);
+    //ChangeColorCodeBack();
+}
+
+function ChangeColorCodeBack(){
+    var src = document.getElementById('source_code');
+    var colors = src.getElementsByClassName('color');
+    for(var i=0; i < colors.length; i++)
+    {
+        var color = colors[i].innerHTML.slice(2);
+        colors[i].style.backgroundColor = '#' + convertABGR2RGBA(color);
+        colors[i].style.color = InvertColor(convertABGR2RGBA(color));
+    }
+}
+function oppositeColor(a, ilighten){
+    if(a.length > 6)    a.slice(2);
+    var max16= Math.floor(15+(ilighten||0));
+    if(max16 < 0 || max16 > 15) max16 = 15;
+    var c16, c10, b=[];
+    for(var i = 0; i < a.length; i++) {
+        c16 = parseInt(a.charAt(i), 16);
+        c10 = parseInt(max16 - c16, 10);
+        if(c10 < 0) c10 = Math.abs(c10);
+        b.push(c10.toString(16));
+    }
+    return '#' + b.join('');
 }
 
 function writeIn(name, value) {
@@ -11,43 +37,48 @@ function writeIn(name, value) {
 }
 
 function changeNumber(value) {
+    console.log(value);
     var a = parseInt(value);
     b = a + 1;
     for (var i = a; i >= 1; i--)
         document.getElementById('n' + i).style.display = 'inherit';
-    for (var j = b; j <= 9; j++) document.getElementById('n' + j).style.display = 'none';
-    drawConfigs();
+    for (var j = b; j <= 10; j++) document.getElementById('n' + j).style.display = 'none';
+    document.getElementById('page_size_value').innerHTML = value.toString();
+    //drawConfigs();
 }
 
-function changeColor(element, mode, name, color) {
-    var BG = "bg",
-        BD = "bd";
+function changeColor(element, mode, name, color, node) {
+    var tmp = color;
     color = convertABGR2RGBA(color);
     switch (mode) {
-        case BG:
+        case 'bg':
             document.getElementById(element).style.backgroundColor = '#' + color;
             break;
-        case BD:
+        case 'bd':
             document.getElementById(element).style.borderColor = '#' + color;
             break;
-        case 'c':
+        case 'name':
             document.getElementById(name).style.color = '#' + color;
             break;
         case 'n':
-            for(i=2;i<=10;i++){
+            for(i=2;i<=10;i++)
                 document.getElementById(name + i).style.color = '#' + color;
-            }
+            break;
+        case 'nb':
+            for(i=2;i<=10;i++)
+                document.getElementById(name + i).style.backgroundColor = '#' + color;
             break;
         default:
             document.getElementById(element).style.color = '#' + color;
     }
-    //color = exConvert(name, color);
-    drawConfigs();
+    if(node != undefined)
+        exConvert(node, tmp, color);
+    //drawConfigs();
 }
 
 function change_round_corner(element, radius) {
     document.getElementById(element).style.borderRadius = radius;
-    drawConfigs();
+    //drawConfigs();
 }
 
 function exMode(origin, direction, color) {
@@ -69,6 +100,7 @@ function exMode(origin, direction, color) {
         }
     }
 }
+
 function convertABGR2RGBA(color)
 {
     if(color.length > 6)
@@ -77,6 +109,81 @@ function convertABGR2RGBA(color)
         color = color.slice(4) + color.slice(2,4) + color.slice(0,2)
     return color; 
 }
+parseColorCode = function(csscolor) {
+    if(csscolor.length > 6)    csscolor = csscolor.slice(0,6);
+    var r = parseInt(csscolor.slice(0,2), 16);
+    var g = parseInt(csscolor.slice(2,4), 16);
+    var b = parseInt(csscolor.slice(4), 16);
+    return parseColor(r,g,b);
+}
+parseColor = function(r, g, b){
+    return {
+        red: r,
+        green: g,
+        blue: b
+    };
+}
+
+function RGBtoHSV(rgb) {
+    var rr, gg, bb,
+    r = parseInt(rgb.red) / 255,
+    g = parseInt(rgb.green) / 255,
+    b = parseInt(rgb.blue) / 255,
+    h, s,
+    v = Math.max(r, g, b),
+    diff = v - Math.min(r, g, b),
+    diffc = function(c){
+        return (v - c) / 6 / diff + 1 / 2;
+    };
+    if (diff == 0) {
+        h = s = 0;
+    } else {
+        s = diff / v;  rr = diffc(r); gg = diffc(g); bb = diffc(b);
+        if (r === v) {
+            h = bb - gg;
+        }else if (g === v) {
+            h = (1 / 3) + rr - bb;
+        }else if (b === v) {
+            h = (2 / 3) + gg - rr;
+        }
+        if (h < 0) {
+            h += 1;
+        }else if (h > 1) {
+            h -= 1;
+        }
+    }
+    return {
+        h: Math.round(h * 360),
+        s: Math.round(s * 100),
+        v: Math.round(v * 100)
+    };
+}
+
+function InvertColor(color){
+    var nc = color;
+    if(color.length > 6)
+        nc = color.slice(2);
+    var b = parseInt(nc.slice(0,2), 16);
+    var g = parseInt(nc.slice(2,4), 16);
+    var r = parseInt(nc.slice(4), 16);
+    var rr = 255 - r;
+    var gg = 255 - g;
+    var bb = 255 - b;
+    if (
+        Math.abs(rr - r) < 40 ||
+        Math.abs(bb - b) < 40 ||
+        Math.abs(gg - g) < 40
+    )
+    {rr = 0; gg = 0; bb = 0;}
+    return (
+        '#' + 
+        rr.toString(16) +
+        gg.toString(16) +
+        bb.toString(16)  
+    );
+}
+
+
 function drawConfigs() {
     var text = '小狼毫';
     var preedit = 'pei se';
