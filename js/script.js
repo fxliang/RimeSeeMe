@@ -37,7 +37,6 @@ function writeIn(name, value) {
 }
 
 function changeNumber(value) {
-    console.log(value);
     var a = parseInt(value);
     b = a + 1;
     for (var i = a; i >= 1; i--)
@@ -63,6 +62,11 @@ function changeColor(element, mode, name, color, node) {
         case 'n':
             for(i=2;i<=10;i++)
                 document.getElementById(name + i).style.color = '#' + color;
+            break;
+        case 'nd':
+            var _cbs = document.getElementsByClassName('_candidate_back');
+            for(var i = 0; i < _cbs.length; i++)
+                _cbs[i].style.borderColor = '#' + color;
             break;
         case 'nb':
             for(i=2;i<=10;i++)

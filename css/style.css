@@ -51,15 +51,18 @@ td {
 
 #box {
     background-color: #FFFFFF;
-    border: 3px solid #000000;
+    border: 2px solid #000000;
     border-radius: 10px;
     box-shadow: 5px 5px 5px #00000090;
-    font-size: 18px;
+    font-size: 20px;
     font-family: 'Microsoft YaHei';
-    width: 160px;
+    width: 200px;
     padding: 10px 10px 10px 10px;
 }
 
+#select {
+    margin-bottom: 10px;
+}
 
 #select #text {
     color: black;
@@ -70,6 +73,7 @@ td {
     border-radius: 5px;
     background-color: #dddddd;
     color: black;
+    padding: 10px;
 }
 
 #word {
@@ -92,12 +96,26 @@ td {
     border-radius: 5px;
 	/* width: 125px; */
     box-shadow: 5px 5px 5px #00000090;
-    padding: 1px 2px 1px 2px;
+    border: 2px solid #00000000;
+    padding: 10px 10px 10px 10px;
     background-color: black;
     color: white;
+    margin-top:    25px;
+    margin-bottom: 25px;
+}
+._candidate_back {
+    border-radius: 5px;
+    border: 2px solid #00000000;
+    box-shadow: 5px 5px 5px #00000000;
+    padding: 10px 10px 10px 10px;
+    margin-top:     25px;
+    margin-bottom:  25px;
+}
+._hilited_marks {
+    display: none;
 }
 
-[id=*"n"] {
+[id="n*"] {
     padding-left: 5px;
 }
 
