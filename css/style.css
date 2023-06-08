@@ -56,7 +56,7 @@ td {
     box-shadow: 5px 5px 5px #00000090;
     font-size: 20px;
     font-family: 'Microsoft YaHei';
-    width: 200px;
+    width: 210px;
     padding: 10px 10px 10px 10px;
 }
 
@@ -114,6 +114,12 @@ td {
 }
 ._hilited_marks {
     display: none;
+}
+#prevpage{
+    color:#00000000
+}
+#nextpage{
+    color:#00000000
 }
 
 [id="n*"] {

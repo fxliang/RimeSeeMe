@@ -8,6 +8,14 @@ function exConvert(name, color, csscolor) {
     //ChangeColorCodeBack();
 }
 
+function isColorElementColorTrans(name){
+    var elm = document.getElementsByName(name)[0];
+    var value = elm.value;
+    if(value.match(/00[a-f0-9]{6}/gi))
+        return true;
+    return false;
+}
+
 function ChangeColorCodeBack(){
     var src = document.getElementById('source_code');
     var colors = src.getElementsByClassName('color');
