@@ -16,6 +16,45 @@ function isColorElementColorTrans(name){
     return false;
 }
 
+function InputFileChange(files) {
+    if (files.length == 0) return;
+    console.log("file changed");
+    const reader = new FileReader();
+    reader.onload = function fileReadComplete() {
+        var ctx = reader.result;
+        var y = YAML.parse(ctx.replace(/(0x[0-9a-fA-F]+)/g, '"$1"'));
+        var jo = JSON.parse(JSON.stringify(y));
+        {
+            var schema = Object.keys(jo)[0].split('/')[Object.keys(jo)[0].split('/').length - 1];
+            document.getElementById('schema').innerText = schema;
+            document.getElementsByName('schema')[0].value = schema;
+        }
+        var keyso = jo[Object.keys(jo)[0]];
+        if (keyso['name'] != undefined){
+            document.getElementById('name').innerText = keyso['name'];
+            document.getElementsByName('name')[0].value = keyso['name'];
+        }
+        if (keyso['author'] != undefined){
+            document.getElementById('author').innerText = keyso['author'];
+            document.getElementsByName('author')[0].value = keyso['author'];
+        }
+        var colors  = [
+            'back_color', 'border_color', 'shadow_color', 'text_color', 'hilited_text_color', 'hilited_back_color', 'hilited_shadow_color', 
+			'hilited_mark_color', 'hilited_label_color', 'hilited_candidate_text_color', 'hilited_comment_text_color',
+			'hilited_candidate_back_color', 'hilited_candidate_shadow_color', 'hilited_candidate_border_color',
+			'label_color', 'candidate_text_color', 'comment_text_color', 'candidate_back_color', 'candidate_shadow_color', 'candidate_border_color',
+			'prevpage_color', 'nextpage_color'
+        ];
+		colors.forEach(function(color){
+        if (keyso[color] != undefined){
+            document.getElementsByName(color)[0].value = keyso[color].toUpperCase().substr(2);
+            document.getElementsByName(color)[0].onchange();
+        }
+        })
+    };
+    reader.readAsText(files[0]);
+}
+
 function ChangeColorCodeBack(){
     var src = document.getElementById('source_code');
     var colors = src.getElementsByClassName('color');
