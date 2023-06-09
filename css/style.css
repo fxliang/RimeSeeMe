@@ -10,7 +10,7 @@ table {
 }
 
 body {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     background-color: #f9f9f9;
 }
@@ -46,7 +46,7 @@ td {
 
 #code_generate {
     padding: 20px 20px 20px 10px;
-    width: 400px;
+    width: 350px;
 }
 
 #box {
@@ -95,31 +95,35 @@ td {
 
 #n1 {
     border-radius: 5px;
-	/* width: 125px; */
+    /* width: 125px; */
     box-shadow: 5px 5px 5px #00000000;
     border: 2px solid #00000000;
     padding: 10px 10px 10px 10px;
     background-color: black;
     color: white;
-    margin-top:    25px;
+    margin-top: 25px;
     margin-bottom: 25px;
 }
+
 ._candidate_back {
     border-radius: 5px;
     border: 2px solid #00000000;
     box-shadow: 5px 5px 5px #00000000;
     padding: 10px 10px 10px 10px;
-    margin-top:     25px;
-    margin-bottom:  25px;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
+
 ._hilited_marks {
     display: none;
 }
-#prevpage{
-    color:#00000000
+
+#prevpage {
+    color: #00000000
 }
-#nextpage{
-    color:#00000000
+
+#nextpage {
+    color: #00000000
 }
 
 [id="n*"] {
@@ -130,8 +134,8 @@ td {
     padding-left: 4px;
 }
 
-input[name="number"] {
-    width: 150px;
+input[type="number"] {
+    width: 50px;
 }
 
 input {

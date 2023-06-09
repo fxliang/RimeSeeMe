@@ -20,7 +20,7 @@
     -->
 </head>
 
-<body >
+<body>
     <h1><span>RIME</span><ruby>西<rt>See</rt></ruby><ruby>米<rt>Me</rt></ruby></h1>
     <table>
         <tr>
@@ -34,14 +34,14 @@
                     </div>
                     <div id="display">
                         <div class="_hilited_candidate_back" id="n1"><span id="_hilited_mark">|</span><span class='label' id="label1">1.</span><span class='word' id="word1">配色</span><span class='code' id="code1">(pei se)</span></div>
-                        <div class="_candidate_back" id="n2"> <span class='_hilited_marks'>|</span> <span class="_label" id="label2">2.</span><span  class="word" id="word2">陪</span><span  class='code' id="code2">(pei)</span></div>
-                        <div class="_candidate_back" id="n3"> <span class='_hilited_marks'>|</span> <span class="_label" id="label3">3.</span><span  class="word" id="word3">配</span><span  class='code' id="code3">(pei)</span></div>
-                        <div class="_candidate_back" id="n4"> <span class='_hilited_marks'>|</span> <span class="_label" id="label4">4.</span><span  class="word" id="word4">賠</span><span  class='code' id="code4">(pei)</span></div>
-                        <div class="_candidate_back" id="n5"> <span class='_hilited_marks'>|</span> <span class="_label" id="label5">5.</span><span  class="word" id="word5">培</span><span  class='code' id="code5">(pei)</span></div>
-                        <div class="_candidate_back" id="n6"> <span class='_hilited_marks'>|</span> <span class="_label" id="label6">6.</span><span  class="word" id="word6">佩</span><span  class='code' id="code6">(pei)</span></div>
-                        <div class="_candidate_back" id="n7"> <span class='_hilited_marks'>|</span> <span class="_label" id="label7">7.</span><span  class="word" id="word7">裴</span><span  class='code' id="code7">(pei)</span></div>
-                        <div class="_candidate_back" id="n8"> <span class='_hilited_marks'>|</span> <span class="_label" id="label8">8.</span><span  class="word" id="word8">斐</span><span  class='code' id="code8">(pei)</span></div>
-                        <div class="_candidate_back" id="n9"> <span class='_hilited_marks'>|</span> <span class="_label" id="label9">9.</span><span  class="word" id="word9">呸</span><span  class='code' id="code9">(pei)</span></div>
+                        <div class="_candidate_back" id="n2"> <span class='_hilited_marks'>|</span> <span class="_label" id="label2">2.</span><span class="word" id="word2">陪</span><span class='code' id="code2">(pei)</span></div>
+                        <div class="_candidate_back" id="n3"> <span class='_hilited_marks'>|</span> <span class="_label" id="label3">3.</span><span class="word" id="word3">配</span><span class='code' id="code3">(pei)</span></div>
+                        <div class="_candidate_back" id="n4"> <span class='_hilited_marks'>|</span> <span class="_label" id="label4">4.</span><span class="word" id="word4">賠</span><span class='code' id="code4">(pei)</span></div>
+                        <div class="_candidate_back" id="n5"> <span class='_hilited_marks'>|</span> <span class="_label" id="label5">5.</span><span class="word" id="word5">培</span><span class='code' id="code5">(pei)</span></div>
+                        <div class="_candidate_back" id="n6"> <span class='_hilited_marks'>|</span> <span class="_label" id="label6">6.</span><span class="word" id="word6">佩</span><span class='code' id="code6">(pei)</span></div>
+                        <div class="_candidate_back" id="n7"> <span class='_hilited_marks'>|</span> <span class="_label" id="label7">7.</span><span class="word" id="word7">裴</span><span class='code' id="code7">(pei)</span></div>
+                        <div class="_candidate_back" id="n8"> <span class='_hilited_marks'>|</span> <span class="_label" id="label8">8.</span><span class="word" id="word8">斐</span><span class='code' id="code8">(pei)</span></div>
+                        <div class="_candidate_back" id="n9"> <span class='_hilited_marks'>|</span> <span class="_label" id="label9">9.</span><span class="word" id="word9">呸</span><span class='code' id="code9">(pei)</span></div>
                         <div class="_candidate_back" id="n10"><span class='_hilited_marks'>|</span> <span class="_label" id="label10">0.</span><span class="word" id="word10">胚</span><span class='code' id="code10">(pei)</span></div>
                     </div>
                 </div>
@@ -66,14 +66,31 @@
                         <span>背景色</span><input type="text" id="background" name="body" value="F9F9F9" onchange="document.getElementById('effect').style.backgroundColor = '#'+this.color">
                     </fieldset>
                     -->
-                    <fieldset id="modEx">
-                        <legend>BGR
-                            <> RGB</legend>
-                        <span>BGR</span><input type="text" id="bgr" value="77DDBB" onchange="exMode('bgr','rgb',this.value);"><br />
-                        <span>RGB</span><input type="text" id="rgb" value="BBDD77" onchange="exMode('rgb','bgr',this.value);"><br />
-                    </fieldset>
                     <fieldset id="yamlLoader">
-                        <span title="单组配色文件">配色文件</span><input title="单组配色文件" type="file" style="background-color: #f0f0f0;" id="fileInput" onchange="InputFileChange(this.files)">
+                        <input title="单组配色文件" type="file" style="background-color: #f0f0f0; width: '60px';" id="fileInput" onchange="InputFileChange(this.files)">
+                    </fieldset>
+                    <fieldset>
+                        <legend>weasel style设置</legend>
+                        <span title="font_face">候选字体</span><input type="text" id="font_face" value="Microsoft Yahei UI" onchange=""><br>
+                        <span title="label_font_face">标签字体</span><input type="text" id="label_font_face" value="Microsoft Yahei UI" onchange=""><br>
+                        <span title="comment_font_face">注解字体</span><input type="text" id="comment_font_face" value="Microsoft Yahei UI" onchange=""><br>
+                        <span title="font_point">候选字号</span><input type="number" id="font_point" value=24 onchange=""><br>
+                        <span title="label_font_point">标签字号</span><input type="number" id="label_font_point" value=24 onchange=""><br>
+                        <span title="comment_font_point">注解字号</span><input type="number" id="comment_font_point" value=24 onchange=""><br>
+                        <span title="horizontal">水平布局</span><input type="checkbox" id="horizontal" checked=true onchange=""><br>
+                        <span title="inline_preedit">行内编辑</span><input type="checkbox" id="inline_preedit" checked=true onchange=""><br>
+                        <span title="border_width">边框大小</span><input type="number" id="border_width" value=1 onchange=""><br>
+                        <span title="margin_x">x&nbsp&nbsp轴边距</span><input type="number" id="margin_x" value=10 onchange=""><br>
+                        <span title="margin_y">y&nbsp&nbsp轴边距</span><input type="number" id="margin_y" value=10 onchange=""><br>
+                        <span title="shadow_radius">阴影半径</span><input type="number" id="shadow_radius" value=10 onchange=""><br>
+                        <span title="shadow_offset_x">阴影x偏置</span><input type="number" id="shadow_offset_x" value=10 onchange=""><br>
+                        <span title="shadow_offset_y">阴影y偏置</span><input type="number" id="shadow_offset_y" value=10 onchange=""><br>
+                        <span title="spacing">码选间距</span><input type="number" id="spacing" value=20 onchange=""><br>
+                        <span title="candidate_spacing">候选间距</span><input type="number" id="candidate_spacing" value=20 onchange=""><br>
+                        <span title="hilite_spacing">行内间距</span><input type="number" id="hilite_spacing" value=20 onchange=""><br>
+                        <span title="hilite_padding">高亮外扩</span><input type="number" id="hilite_padding" value=10 onchange=""><br>
+                        <span title="round_corner">高亮圆角</span><input type="number" id="round_corner" value=0 onchange=""><br>
+                        <span title="corner_radius">窗口圆角</span><input type="number" id="corner_radius" value=0 onchange=""><br>
                     </fieldset>
                 </form>
             </td>
@@ -82,65 +99,65 @@
                 <form>
                     <fieldset>
                         <legend>背景設置</legend>
-                        <span title="back_color">窗口背景</span><input type="text" style="width:auto" data-jscolor="{}" name="back_color" value="FFFFFF" onchange="changeColor('box','bg',this.name,this.value, 'back_color');"><br />
-                        <span title="shadow_color">窗口阴影</span><input type="text" style="width:auto" data-jscolor="{}" name="shadow_color" value="00000000" onchange="exConvert('shadow_color', this.value, convertABGR2RGBA(this.value));
+                        <span title="back_color">窗口背景</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="back_color" value="FFFFFF" onchange="changeColor('box','bg',this.name,this.value, 'back_color');"><br />
+                        <span title="shadow_color">窗口阴影</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="shadow_color" value="00000000" onchange="exConvert('shadow_color', this.value, convertABGR2RGBA(this.value));
                         document.getElementById('box').style.boxShadow = '5px 5px 5px #' + convertABGR2RGBA(this.value);"><br />
-                        <span title="border_color">窗口邊框</span><input type="text" style="width:auto" data-jscolor="{}" name="border_color" value="000000" onchange="changeColor('box','bd',this.name,this.value, 'border_color');">
+                        <span title="border_color">窗口邊框</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="border_color" value="000000" onchange="changeColor('box','bd',this.name,this.value, 'border_color');">
                     </fieldset>
                     <fieldset>
                         <legend>內選區域</legend>
-                        <span title="text_color">文&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp字</span><input type="text" style="width:auto" data-jscolor="{}" name="text_color" value="000000" onchange="changeColor('text','c',this.name,this.value, 'text_color');"><br />
-                        <span title="hilited_text_color">編&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp碼</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_text_color" value="000000" onchange="changeColor('hilited','c',this.name,this.value, 'hilited_text_color');"><br />
-                        <span title="hilited_back_color">背&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp景</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_back_color" value="DDDDDD" onchange="changeColor('hilited','bg',this.name,this.value, 'hilited_back_color');"><br />
-                        <span title="hilited_shadow_color">阴&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp影</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_shadow_color" value="00000000" onchange="exConvert('hilited_shadow_color', this.value, convertABGR2RGBA(this.value));document.getElementById('hilited').style.boxShadow = '5px 5px 5px #' + convertABGR2RGBA(this.value);"><br />
-                        <span title="prevpage_color">向上翻页</span><input type="text" style="width:auto" data-jscolor="{}" name="prevpage_color" value="00000000" onchange="exConvert('prevpage_color', this.value, convertABGR2RGBA(this.value)); if(!isColorElementColorTrans('prevpage_color') && !isColorElementColorTrans('prevpage_color'))changeColor('prevpage', 'c', this.name, this.value, 'prevpage_color');"><br />
-                        <span title="nextpage_color">向下翻页</span><input type="text" style="width:auto" data-jscolor="{}" name="nextpage_color" value="00000000" onchange="exConvert('nextpage_color', this.value, convertABGR2RGBA(this.value)); if(!isColorElementColorTrans('prevpage_color') && !isColorElementColorTrans('prevpage_color'))changeColor('nextpage', 'c', this.name, this.value, 'nextpage_color');">
+                        <span title="text_color">文&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp字</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="text_color" value="000000" onchange="changeColor('text','c',this.name,this.value, 'text_color');"><br
+                        />
+                        <span title="hilited_text_color">編&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp碼</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_text_color" value="000000" onchange="changeColor('hilited','c',this.name,this.value, 'hilited_text_color');"><br
+                        />
+                        <span title="hilited_back_color">背&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp景</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_back_color" value="DDDDDD" onchange="changeColor('hilited','bg',this.name,this.value, 'hilited_back_color');"><br
+                        />
+                        <span title="hilited_shadow_color">阴&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp影</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_shadow_color" value="00000000" onchange="exConvert('hilited_shadow_color', this.value, convertABGR2RGBA(this.value));document.getElementById('hilited').style.boxShadow = '5px 5px 5px #' + convertABGR2RGBA(this.value);"><br
+                        />
+                        <span title="prevpage_color">向上翻页</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="prevpage_color" value="00000000" onchange="exConvert('prevpage_color', this.value, convertABGR2RGBA(this.value)); if(!isColorElementColorTrans('prevpage_color') && !isColorElementColorTrans('prevpage_color'))changeColor('prevpage', 'c', this.name, this.value, 'prevpage_color');"><br
+                        />
+                        <span title="nextpage_color">向下翻页</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="nextpage_color" value="00000000" onchange="exConvert('nextpage_color', this.value, convertABGR2RGBA(this.value)); if(!isColorElementColorTrans('prevpage_color') && !isColorElementColorTrans('prevpage_color'))changeColor('nextpage', 'c', this.name, this.value, 'nextpage_color');">
                     </fieldset>
                     <fieldset>
                         <legend>激活候選項</legend>
-                        <span title="hilited_mark_color">激活標識</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_mark_color" value="FFFFFF" onchange="changeColor('n1','name','_hilited_mark',this.value, 'hilited_mark_color');"><br />
-                        <span title="hilited_label_color">序號文字</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_label_color" value="FFFFFF" onchange="changeColor('n1','name','label1',this.value, 'hilited_label_color');"><br />
-                        <span title="hilited_candidate_text_color">候選文字</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_text_color" value="FFFFFF" onchange="changeColor('n1','name','word1',this.value, 'hilited_candidate_text_color');"><br />
-                        <span title="hilited_comment_text_color">提示文字</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_comment_text_color" value="FFFFFF" onchange="changeColor('n1','name','code1',this.value, 'hilited_comment_text_color');"><br />
-                        <span title="hilited_candidate_back_color">激活背景</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_back_color" value="000000" onchange="changeColor('n1','bg',this.name,this.value, 'hilited_candidate_back_color');"><br />
-                        <span title="hilited_candidate_border_color">边&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp框</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_border_color" value="00000000" onchange="changeColor('n1','bd',this.name,this.value, 'hilited_candidate_border_color');"><br />
-                        <span title="hilited_candidate_shadow_color">激活阴影</span><input type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_shadow_color" value="00000000" onchange="exConvert('hilited_candidate_shadow_color', this.value, convertABGR2RGBA(this.value));document.getElementById('n1').style.boxShadow = '5px 5px 5px #' + convertABGR2RGBA(this.value);"><br />
+                        <span title="hilited_mark_color">激活標識</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_mark_color" value="FFFFFF" onchange="changeColor('n1','name','_hilited_mark',this.value, 'hilited_mark_color');"><br
+                        />
+                        <span title="hilited_label_color">序號文字</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_label_color" value="FFFFFF" onchange="changeColor('n1','name','label1',this.value, 'hilited_label_color');"><br
+                        />
+                        <span title="hilited_candidate_text_color">候選文字</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_text_color" value="FFFFFF" onchange="changeColor('n1','name','word1',this.value, 'hilited_candidate_text_color');"><br
+                        />
+                        <span title="hilited_comment_text_color">提示文字</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_comment_text_color" value="FFFFFF" onchange="changeColor('n1','name','code1',this.value, 'hilited_comment_text_color');"><br
+                        />
+                        <span title="hilited_candidate_back_color">激活背景</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_back_color" value="000000" onchange="changeColor('n1','bg',this.name,this.value, 'hilited_candidate_back_color');"><br
+                        />
+                        <span title="hilited_candidate_border_color">边&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp框</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_border_color" value="00000000" onchange="changeColor('n1','bd',this.name,this.value, 'hilited_candidate_border_color');"><br
+                        />
+                        <span title="hilited_candidate_shadow_color">激活阴影</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_shadow_color" value="00000000" onchange="exConvert('hilited_candidate_shadow_color', this.value, convertABGR2RGBA(this.value));document.getElementById('n1').style.boxShadow = '5px 5px 5px #' + convertABGR2RGBA(this.value);"><br
+                        />
                     </fieldset>
                     <fieldset>
                         <legend>其它候選項</legend>
-                        <span title="label_color">序號文字</span><input type="text" style="width:auto" data-jscolor="{}" name="label_color" value="000000" onchange="changeColor('ni', 'n', 'label', this.value, 'label_color');"><br>
-                        <span title="candidate_text_color">候選文字</span><input type="text" style="width:auto" data-jscolor="{}" name="candidate_text_color" value="000000" onchange="changeColor('ni', 'n', 'word', this.value, 'candidate_text_color');"><br />
-                        <span title="comment_text_color">提示文字</span><input type="text" style="width:auto" data-jscolor="{}" name="comment_text_color" value="000000" onchange="changeColor('ni', 'n', 'code', this.value, 'comment_text_color');"><br />
-                        <span title="candidate_back_color">候選背景</span><input type="text" style="width:auto" data-jscolor="{}" name="candidate_back_color" value="00000000" onchange="changeColor('ni', 'nb', 'n', this.value, 'candidate_back_color');"><br />
-                        <span title="candidate_border_color">边&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp框</span><input type="text" style="width:auto" data-jscolor="{}" name="candidate_border_color" value="00000000" onchange="changeColor('ni', 'nd', 'n', this.value, 'candidate_border_color');"><br />
-                        <span title="candidate_shadow_color">候選阴影</span><input type="text" style="width:auto" data-jscolor="{}" name="candidate_shadow_color" value="00000000" onchange="exConvert('candidate_shadow_color', this.value, convertABGR2RGBA(this.value));
+                        <span title="label_color">序號文字</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="label_color" value="000000" onchange="changeColor('ni', 'n', 'label', this.value, 'label_color');"><br>
+                        <span title="candidate_text_color">候選文字</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="candidate_text_color" value="000000" onchange="changeColor('ni', 'n', 'word', this.value, 'candidate_text_color');"><br
+                        />
+                        <span title="comment_text_color">提示文字</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="comment_text_color" value="000000" onchange="changeColor('ni', 'n', 'code', this.value, 'comment_text_color');"><br
+                        />
+                        <span title="candidate_back_color">候選背景</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="candidate_back_color" value="00000000" onchange="changeColor('ni', 'nb', 'n', this.value, 'candidate_back_color');"><br
+                        />
+                        <span title="candidate_border_color">边&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp框</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="candidate_border_color" value="00000000" onchange="changeColor('ni', 'nd', 'n', this.value, 'candidate_border_color');"><br
+                        />
+                        <span title="candidate_shadow_color">候選阴影</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="candidate_shadow_color" value="00000000" onchange="exConvert('candidate_shadow_color', this.value, convertABGR2RGBA(this.value));
                         for(var i=2; i<10; i++) document.getElementById('n' + i).style.boxShadow = '5px 5px 5px #' + convertABGR2RGBA(this.value);"><br />
                     </fieldset>
-                </form>
-            </td>
-            <!--
-
-            <td id="layout_setting">
-                <form>
-                    <fieldset>
-                        <legend>weasel style设置</legend>
-                        <span title="字体名称">font_face</span><input type="text" id="font_face" value="Microsoft Yahei UI" onchange="drawConfigs()" /><br />
-                        <span title="字体字号">font_point</span><input type="number" id="font_point" value=24 onchange="drawConfigs()" /><br />
-                        <span title="是否水平布局">horizontal</span><input type="checkbox" id="horizontal" checked=true onchange="drawConfigs()" /><br />
-                        <span title="嵌入式编辑">inline_preedit</span><input type="checkbox" id="inline_preedit" checked=true onchange="drawConfigs()" /><br />
-                        <span title="边框大小">border_width</span><input type="number" id="border_width" value=1 onchange="drawConfigs()" /><br />
-                        <span title="候选离边框x轴距离">margin_x</span><input type="number" id="margin_x" value=10 onchange="drawConfigs()" /><br />
-                        <span title="候选离边框y轴距离">margin_y</span><input type="number" id="margin_y" value=10 onchange="drawConfigs()" /><br />
-                        <span title="输入编码离候选距离">spacing</span><input type="number" id="spacing" value=20 onchange="drawConfigs()" /><br />
-                        <span title="候选之间的距离">candidate_spacing</span><input type="number" id="candidate_spacing" value=20 onchange="drawConfigs()" /><br />
-                        <span title="候选字背景色块到字边界的距离">hilite_padding</span><input type="number" id="hilite_padding" value=10 onchange="drawConfigs()" /><br />
-                        <span title="候选序号与候选词/字之间的距离">hilite_spacing</span><input type="number" id="hilite_spacing" value=20 onchange="drawConfigs()" /><br />
-                        <span title="高亮色块圆角半径">round_corner</span><input type="number" id="round_corner" value=0 onchange="drawConfigs()" /><br />
-                        <span title="窗口圆角半径">corner_radius</span><input type="number" id="corner_radius" value=0 onchange="drawConfigs()" /><br />
+                    <fieldset id="modEx">
+                        <legend>BGR
+                            <> RGB</legend>
+                        <span>BGR</span><input type="text" id="bgr" value="77DDBB" onchange="exMode('bgr','rgb',this.value);"><br />
+                        <span>RGB</span><input type="text" id="rgb" value="BBDD77" onchange="exMode('rgb','bgr',this.value);"><br />
                     </fieldset>
                 </form>
             </td>
-            -->
+
             <td id="code_generate">
                 <h2>生成代碼</h2>
                 <div id="source_code">
