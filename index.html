@@ -74,23 +74,23 @@
                         <span title="font_face">候选字体</span><input type="text" id="font_face" value="Microsoft Yahei UI" onchange=""><br>
                         <span title="label_font_face">标签字体</span><input type="text" id="label_font_face" value="Microsoft Yahei UI" onchange=""><br>
                         <span title="comment_font_face">注解字体</span><input type="text" id="comment_font_face" value="Microsoft Yahei UI" onchange=""><br>
-                        <span title="font_point">候选字号</span><input type="number" id="font_point" value=24 onchange=""><br>
-                        <span title="label_font_point">标签字号</span><input type="number" id="label_font_point" value=24 onchange=""><br>
-                        <span title="comment_font_point">注解字号</span><input type="number" id="comment_font_point" value=24 onchange=""><br>
+                        <span title="font_point">候选字号</span><input type="number" id="font_point" value=14 onchange=""><br>
+                        <span title="label_font_point">标签字号</span><input type="number" id="label_font_point" value=14 onchange=""><br>
+                        <span title="comment_font_point">注解字号</span><input type="number" id="comment_font_point" value=14 onchange=""><br>
                         <span title="horizontal">水平布局</span><input type="checkbox" id="horizontal" checked=true onchange=""><br>
                         <span title="inline_preedit">行内编辑</span><input type="checkbox" id="inline_preedit" checked=true onchange=""><br>
                         <span title="border_width">边框大小</span><input type="number" id="border_width" value=1 onchange=""><br>
                         <span title="margin_x">x&nbsp&nbsp轴边距</span><input type="number" id="margin_x" value=10 onchange=""><br>
                         <span title="margin_y">y&nbsp&nbsp轴边距</span><input type="number" id="margin_y" value=10 onchange=""><br>
-                        <span title="shadow_radius">阴影半径</span><input type="number" id="shadow_radius" value=10 onchange=""><br>
-                        <span title="shadow_offset_x">阴影x偏置</span><input type="number" id="shadow_offset_x" value=10 onchange=""><br>
-                        <span title="shadow_offset_y">阴影y偏置</span><input type="number" id="shadow_offset_y" value=10 onchange=""><br>
+                        <span title="shadow_radius">阴影半径</span><input type="number" id="shadow_radius" value=6 onchange="UpdateShadowView();"><br>
+                        <span title="shadow_offset_x">阴影x偏置</span><input type="number" id="shadow_offset_x" value=5 onchange="UpdateShadowView();"><br>
+                        <span title="shadow_offset_y">阴影y偏置</span><input type="number" id="shadow_offset_y" value=5 onchange="UpdateShadowView();"><br>
                         <span title="spacing">码选间距</span><input type="number" id="spacing" value=20 onchange=""><br>
                         <span title="candidate_spacing">候选间距</span><input type="number" id="candidate_spacing" value=20 onchange=""><br>
                         <span title="hilite_spacing">行内间距</span><input type="number" id="hilite_spacing" value=20 onchange=""><br>
                         <span title="hilite_padding">高亮外扩</span><input type="number" id="hilite_padding" value=10 onchange=""><br>
-                        <span title="round_corner">高亮圆角</span><input type="number" id="round_corner" value=0 onchange=""><br>
-                        <span title="corner_radius">窗口圆角</span><input type="number" id="corner_radius" value=0 onchange=""><br>
+                        <span title="round_corner">高亮圆角</span><input type="number" id="round_corner" value=0 onchange="UpdateRoundCorner();"><br>
+                        <span title="corner_radius">窗口圆角</span><input type="number" id="corner_radius" value=0 onchange="UpdateCornerRadius();"><br>
                     </fieldset>
                 </form>
             </td>
@@ -100,8 +100,8 @@
                     <fieldset>
                         <legend>背景設置</legend>
                         <span title="back_color">窗口背景</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="back_color" value="FFFFFF" onchange="changeColor('box','bg',this.name,this.value, 'back_color');"><br />
-                        <span title="shadow_color">窗口阴影</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="shadow_color" value="00000000" onchange="exConvert('shadow_color', this.value, convertABGR2RGBA(this.value));
-                        document.getElementById('box').style.boxShadow = '5px 5px 5px #' + convertABGR2RGBA(this.value);"><br />
+                        <span title="shadow_color">窗口阴影</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="shadow_color" value="00000000" onchange="exConvert('shadow_color', this.value, convertABGR2RGBA(this.value)); UpdateShadowView();"><br
+                        />
                         <span title="border_color">窗口邊框</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="border_color" value="000000" onchange="changeColor('box','bd',this.name,this.value, 'border_color');">
                     </fieldset>
                     <fieldset>
@@ -112,7 +112,7 @@
                         />
                         <span title="hilited_back_color">背&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp景</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_back_color" value="DDDDDD" onchange="changeColor('hilited','bg',this.name,this.value, 'hilited_back_color');"><br
                         />
-                        <span title="hilited_shadow_color">阴&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp影</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_shadow_color" value="00000000" onchange="exConvert('hilited_shadow_color', this.value, convertABGR2RGBA(this.value));document.getElementById('hilited').style.boxShadow = '5px 5px 5px #' + convertABGR2RGBA(this.value);"><br
+                        <span title="hilited_shadow_color">阴&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp影</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_shadow_color" value="00000000" onchange="exConvert('hilited_shadow_color', this.value, convertABGR2RGBA(this.value)); UpdateShadowView();"><br
                         />
                         <span title="prevpage_color">向上翻页</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="prevpage_color" value="00000000" onchange="exConvert('prevpage_color', this.value, convertABGR2RGBA(this.value)); if(!isColorElementColorTrans('prevpage_color') && !isColorElementColorTrans('prevpage_color'))changeColor('prevpage', 'c', this.name, this.value, 'prevpage_color');"><br
                         />
@@ -132,7 +132,7 @@
                         />
                         <span title="hilited_candidate_border_color">边&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp框</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_border_color" value="00000000" onchange="changeColor('n1','bd',this.name,this.value, 'hilited_candidate_border_color');"><br
                         />
-                        <span title="hilited_candidate_shadow_color">激活阴影</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_shadow_color" value="00000000" onchange="exConvert('hilited_candidate_shadow_color', this.value, convertABGR2RGBA(this.value));document.getElementById('n1').style.boxShadow = '5px 5px 5px #' + convertABGR2RGBA(this.value);"><br
+                        <span title="hilited_candidate_shadow_color">激活阴影</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="hilited_candidate_shadow_color" value="00000000" onchange="exConvert('hilited_candidate_shadow_color', this.value, convertABGR2RGBA(this.value)); UpdateShadowView();"><br
                         />
                     </fieldset>
                     <fieldset>
@@ -146,8 +146,8 @@
                         />
                         <span title="candidate_border_color">边&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp框</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="candidate_border_color" value="00000000" onchange="changeColor('ni', 'nd', 'n', this.value, 'candidate_border_color');"><br
                         />
-                        <span title="candidate_shadow_color">候選阴影</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="candidate_shadow_color" value="00000000" onchange="exConvert('candidate_shadow_color', this.value, convertABGR2RGBA(this.value));
-                        for(var i=2; i<10; i++) document.getElementById('n' + i).style.boxShadow = '5px 5px 5px #' + convertABGR2RGBA(this.value);"><br />
+                        <span title="candidate_shadow_color">候選阴影</span><input style="width:100px" type="text" style="width:auto" data-jscolor="{}" name="candidate_shadow_color" value="00000000" onchange="exConvert('candidate_shadow_color', this.value, convertABGR2RGBA(this.value)); UpdateShadowView();"><br
+                        />
                     </fieldset>
                     <fieldset id="modEx">
                         <legend>BGR

@@ -1,17 +1,12 @@
 function exConvert(name, color, csscolor) {
     var elm = document.getElementById(name);
     elm.innerHTML = '0x' + color;
-    //elm.style.backgroundColor = '#' + csscolor;
-    //elm.style.color = oppositeColor(csscolor, -1);
-    //var hsv = RGBtoHSV(parseColorCode(csscolor));
-    //elm.style.color = InvertColor(csscolor);
-    //ChangeColorCodeBack();
 }
 
-function isColorElementColorTrans(name){
+function isColorElementColorTrans(name) {
     var elm = document.getElementsByName(name)[0];
     var value = elm.value;
-    if(value.match(/00[a-f0-9]{6}/gi))
+    if (value.match(/00[a-f0-9]{6}/gi))
         return true;
     return false;
 }
@@ -23,60 +18,84 @@ function InputFileChange(files) {
     reader.onload = function fileReadComplete() {
         var ctx = reader.result;
         var y = YAML.parse(ctx.replace(/(0x[0-9a-fA-F]+)/g, '"$1"'));
-        var jo = JSON.parse(JSON.stringify(y));
-        {
+        var jo = JSON.parse(JSON.stringify(y)); {
             var schema = Object.keys(jo)[0].split('/')[Object.keys(jo)[0].split('/').length - 1];
             document.getElementById('schema').innerText = schema;
             document.getElementsByName('schema')[0].value = schema;
         }
         var keyso = jo[Object.keys(jo)[0]];
-        if (keyso['name'] != undefined){
+        if (keyso['name'] != undefined) {
             document.getElementById('name').innerText = keyso['name'];
             document.getElementsByName('name')[0].value = keyso['name'];
         }
-        if (keyso['author'] != undefined){
+        if (keyso['author'] != undefined) {
             document.getElementById('author').innerText = keyso['author'];
             document.getElementsByName('author')[0].value = keyso['author'];
         }
-        var colors  = [
-            'back_color', 'border_color', 'shadow_color', 'text_color', 'hilited_text_color', 'hilited_back_color', 'hilited_shadow_color', 
-			'hilited_mark_color', 'hilited_label_color', 'hilited_candidate_text_color', 'hilited_comment_text_color',
-			'hilited_candidate_back_color', 'hilited_candidate_shadow_color', 'hilited_candidate_border_color',
-			'label_color', 'candidate_text_color', 'comment_text_color', 'candidate_back_color', 'candidate_shadow_color', 'candidate_border_color',
-			'prevpage_color', 'nextpage_color'
+        var colors = [
+            'back_color', 'border_color', 'shadow_color', 'text_color', 'hilited_text_color', 'hilited_back_color', 'hilited_shadow_color',
+            'hilited_mark_color', 'hilited_label_color', 'hilited_candidate_text_color', 'hilited_comment_text_color',
+            'hilited_candidate_back_color', 'hilited_candidate_shadow_color', 'hilited_candidate_border_color',
+            'label_color', 'candidate_text_color', 'comment_text_color', 'candidate_back_color', 'candidate_shadow_color', 'candidate_border_color',
+            'prevpage_color', 'nextpage_color'
         ];
-		colors.forEach(function(color){
-        if (keyso[color] != undefined){
-            document.getElementsByName(color)[0].value = keyso[color].toUpperCase().substr(2);
-            document.getElementsByName(color)[0].onchange();
-        }
+        colors.forEach(function(color) {
+            if (keyso[color] != undefined) {
+                document.getElementsByName(color)[0].value = keyso[color].toUpperCase().substr(2);
+                document.getElementsByName(color)[0].onchange();
+            }
         })
     };
     reader.readAsText(files[0]);
 }
 
-function ChangeColorCodeBack(){
+function ChangeColorCodeBack() {
     var src = document.getElementById('source_code');
     var colors = src.getElementsByClassName('color');
-    for(var i=0; i < colors.length; i++)
-    {
+    for (var i = 0; i < colors.length; i++) {
         var color = colors[i].innerHTML.slice(2);
         colors[i].style.backgroundColor = '#' + convertABGR2RGBA(color);
         colors[i].style.color = InvertColor(convertABGR2RGBA(color));
     }
 }
-function oppositeColor(a, ilighten){
-    if(a.length > 6)    a.slice(2);
-    var max16= Math.floor(15+(ilighten||0));
-    if(max16 < 0 || max16 > 15) max16 = 15;
-    var c16, c10, b=[];
-    for(var i = 0; i < a.length; i++) {
-        c16 = parseInt(a.charAt(i), 16);
-        c10 = parseInt(max16 - c16, 10);
-        if(c10 < 0) c10 = Math.abs(c10);
-        b.push(c10.toString(16));
+
+function UpdateCornerRadius() {
+    var box = document.getElementById('box');
+    var corner_radius = document.getElementById('corner_radius').value;
+    box.style.borderRadius = corner_radius + 'px';
+}
+
+function UpdateRoundCorner() {
+    var round_corner = document.getElementById('round_corner').value;
+    for (var i = 1; i <= 10; i++) {
+        var elm = document.getElementById('n' + i);
+        elm.style.borderRadius = round_corner + 'px';
     }
-    return '#' + b.join('');
+}
+
+function UpdateShadowView() {
+    var box = document.getElementById('box');
+    var n1 = document.getElementById('n1');
+    var hilited = document.getElementById('hilited');
+    var shadow_offset_x = document.getElementById('shadow_offset_x').value;
+    var shadow_offset_y = document.getElementById('shadow_offset_y').value;
+    var shadow_radius = document.getElementById('shadow_radius').value;
+
+    var prefix = shadow_offset_x.toString() + 'px ' + shadow_offset_y.toString() + 'px ' + shadow_radius.toString() + 'px #';
+    var setting = prefix + convertABGR2RGBA(document.getElementsByName('shadow_color')[0].value);
+    box.style.boxShadow = setting;
+
+    setting = prefix + convertABGR2RGBA(document.getElementsByName('hilited_shadow_color')[0].value);
+    hilited.style.boxShadow = setting;
+
+    setting = prefix + convertABGR2RGBA(document.getElementsByName('hilited_candidate_shadow_color')[0].value);
+    n1.style.boxShadow = setting;
+
+    setting = prefix + convertABGR2RGBA(document.getElementsByName('candidate_shadow_color')[0].value);
+    for (var i = 2; i <= 10; i++) {
+        var elm = document.getElementById('n' + i);
+        elm.style.boxShadow = setting;
+    }
 }
 
 function writeIn(name, value) {
@@ -107,22 +126,22 @@ function changeColor(element, mode, name, color, node) {
             document.getElementById(name).style.color = '#' + color;
             break;
         case 'n':
-            for(i=2;i<=10;i++)
+            for (i = 2; i <= 10; i++)
                 document.getElementById(name + i).style.color = '#' + color;
             break;
         case 'nd':
             var _cbs = document.getElementsByClassName('_candidate_back');
-            for(var i = 0; i < _cbs.length; i++)
+            for (var i = 0; i < _cbs.length; i++)
                 _cbs[i].style.borderColor = '#' + color;
             break;
         case 'nb':
-            for(i=2;i<=10;i++)
+            for (i = 2; i <= 10; i++)
                 document.getElementById(name + i).style.backgroundColor = '#' + color;
             break;
         default:
             document.getElementById(element).style.color = '#' + color;
     }
-    if(node != undefined)
+    if (node != undefined)
         exConvert(node, tmp, color);
     //drawConfigs();
 }
@@ -152,22 +171,23 @@ function exMode(origin, direction, color) {
     }
 }
 
-function convertABGR2RGBA(color)
-{
-    if(color.length > 6)
-        color = color.slice(6,8) + color.slice(4,6) + color.slice(2,4) + color.slice(0,2)
+function convertABGR2RGBA(color) {
+    if (color.length > 6)
+        color = color.slice(6, 8) + color.slice(4, 6) + color.slice(2, 4) + color.slice(0, 2)
     else
-        color = color.slice(4) + color.slice(2,4) + color.slice(0,2)
-    return color; 
+        color = color.slice(4) + color.slice(2, 4) + color.slice(0, 2)
+    return color;
 }
+
 parseColorCode = function(csscolor) {
-    if(csscolor.length > 6)    csscolor = csscolor.slice(0,6);
-    var r = parseInt(csscolor.slice(0,2), 16);
-    var g = parseInt(csscolor.slice(2,4), 16);
+    if (csscolor.length > 6) csscolor = csscolor.slice(0, 6);
+    var r = parseInt(csscolor.slice(0, 2), 16);
+    var g = parseInt(csscolor.slice(2, 4), 16);
     var b = parseInt(csscolor.slice(4), 16);
-    return parseColor(r,g,b);
+    return parseColor(r, g, b);
 }
-parseColor = function(r, g, b){
+
+parseColor = function(r, g, b) {
     return {
         red: r,
         green: g,
@@ -177,29 +197,32 @@ parseColor = function(r, g, b){
 
 function RGBtoHSV(rgb) {
     var rr, gg, bb,
-    r = parseInt(rgb.red) / 255,
-    g = parseInt(rgb.green) / 255,
-    b = parseInt(rgb.blue) / 255,
-    h, s,
-    v = Math.max(r, g, b),
-    diff = v - Math.min(r, g, b),
-    diffc = function(c){
-        return (v - c) / 6 / diff + 1 / 2;
-    };
+        r = parseInt(rgb.red) / 255,
+        g = parseInt(rgb.green) / 255,
+        b = parseInt(rgb.blue) / 255,
+        h, s,
+        v = Math.max(r, g, b),
+        diff = v - Math.min(r, g, b),
+        diffc = function(c) {
+            return (v - c) / 6 / diff + 1 / 2;
+        };
     if (diff == 0) {
         h = s = 0;
     } else {
-        s = diff / v;  rr = diffc(r); gg = diffc(g); bb = diffc(b);
+        s = diff / v;
+        rr = diffc(r);
+        gg = diffc(g);
+        bb = diffc(b);
         if (r === v) {
             h = bb - gg;
-        }else if (g === v) {
+        } else if (g === v) {
             h = (1 / 3) + rr - bb;
-        }else if (b === v) {
+        } else if (b === v) {
             h = (2 / 3) + gg - rr;
         }
         if (h < 0) {
             h += 1;
-        }else if (h > 1) {
+        } else if (h > 1) {
             h -= 1;
         }
     }
@@ -210,12 +233,12 @@ function RGBtoHSV(rgb) {
     };
 }
 
-function InvertColor(color){
+function InvertColor(color) {
     var nc = color;
-    if(color.length > 6)
+    if (color.length > 6)
         nc = color.slice(2);
-    var b = parseInt(nc.slice(0,2), 16);
-    var g = parseInt(nc.slice(2,4), 16);
+    var b = parseInt(nc.slice(0, 2), 16);
+    var g = parseInt(nc.slice(2, 4), 16);
     var r = parseInt(nc.slice(4), 16);
     var rr = 255 - r;
     var gg = 255 - g;
@@ -224,13 +247,16 @@ function InvertColor(color){
         Math.abs(rr - r) < 40 ||
         Math.abs(bb - b) < 40 ||
         Math.abs(gg - g) < 40
-    )
-    {rr = 0; gg = 0; bb = 0;}
+    ) {
+        rr = 0;
+        gg = 0;
+        bb = 0;
+    }
     return (
-        '#' + 
+        '#' +
         rr.toString(16) +
         gg.toString(16) +
-        bb.toString(16)  
+        bb.toString(16)
     );
 }
 
@@ -259,7 +285,7 @@ function drawConfigs() {
     var round_corner = parseInt(document.getElementById('round_corner').value);
     // 获取颜色设定
     // 背景颜色
-    var backcolor = '#' + convertABGR2RGBA( document.getElementsByName('back_color')[0].value);
+    var backcolor = '#' + convertABGR2RGBA(document.getElementsByName('back_color')[0].value);
     // 边框颜色
     var bordercolor = '#' + document.getElementsByName('border_color')[0].value;
     // 内选区域中已经完成选字部分的文字颜色
