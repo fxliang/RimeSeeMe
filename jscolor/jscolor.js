@@ -849,6 +849,16 @@ var jsc = {
 					1
 				];
 
+			} else if (m[1].length === 4) {
+				// 3-char notation
+				ret.format = 'hexa';
+				ret.rgba = [
+					parseInt(m[1].charAt(3) + m[1].charAt(3),16),
+					parseInt(m[1].charAt(2) + m[1].charAt(2),16),
+					parseInt(m[1].charAt(1) + m[1].charAt(1),16),
+					parseInt(m[1].charAt(0) + m[1].charAt(0),16) / 255.0
+				];
+
 			} else {
 				return false;
 			}
