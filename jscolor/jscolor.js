@@ -833,9 +833,9 @@ var jsc = {
 				// 6-char notation
 				ret.format = 'hexa';
 				ret.rgba = [
-					parseInt(m[1].slice(0,2),16),
-					parseInt(m[1].slice(2,4),16),
 					parseInt(m[1].slice(4,6),16),
+					parseInt(m[1].slice(2,4),16),
+					parseInt(m[1].slice(0,2),16),
 					1
 				];
 
